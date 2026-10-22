@@ -80,7 +80,7 @@ router.get(
   asyncHandler(async (req: Request, res: Response) => {
     const workout = await withRetry(() =>
       prisma.workout.findFirst({
-        where: { id: req.params.id, userId: req.user!.userId },
+        where: { id: req.params.id as string, userId: req.user!.userId },
         include: {
           sets: { orderBy: [{ exerciseName: "asc" }, { setNumber: "asc" }] },
         },
@@ -161,7 +161,7 @@ router.put(
     // Verify ownership
     const existing = await withRetry(() =>
       prisma.workout.findFirst({
-        where: { id: req.params.id, userId },
+        where: { id: req.params.id as string, userId },
       })
     );
 
@@ -181,7 +181,7 @@ router.put(
     // If sets are provided, replace all sets
     if (sets) {
       await prisma.exerciseSet.deleteMany({
-        where: { workoutId: req.params.id },
+        where: { workoutId: req.params.id as string },
       });
 
       updateData.sets = {
@@ -199,7 +199,7 @@ router.put(
 
     const workout = await withRetry(() =>
       prisma.workout.update({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         data: updateData,
         include: {
           sets: { orderBy: [{ exerciseName: "asc" }, { setNumber: "asc" }] },
@@ -218,13 +218,13 @@ router.delete(
   asyncHandler(async (req: Request, res: Response) => {
     const existing = await withRetry(() =>
       prisma.workout.findFirst({
-        where: { id: req.params.id, userId: req.user!.userId },
+        where: { id: req.params.id as string, userId: req.user!.userId },
       })
     );
 
     if (!existing) throw new AppError(404, "Workout not found");
 
-    await prisma.workout.delete({ where: { id: req.params.id } });
+    await prisma.workout.delete({ where: { id: req.params.id as string } });
     res.json({ message: "Workout deleted" });
   })
 );

@@ -46,7 +46,7 @@ router.get(
   authMiddleware,
   asyncHandler(async (req: Request, res: Response) => {
     const userId = req.user!.userId;
-    const exerciseName = decodeURIComponent(req.params.name);
+    const exerciseName = decodeURIComponent(String(req.params.name));
 
     const sets = await withRetry(() =>
       prisma.exerciseSet.findMany({

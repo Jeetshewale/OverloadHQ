@@ -42,7 +42,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
 
 export function generateToken(payload: AuthPayload): string {
   return jwt.sign(payload, config.jwt.secret, {
-    expiresIn: config.jwt.expiry as string,
+    expiresIn: config.jwt.expiry as any,
   });
 }
 

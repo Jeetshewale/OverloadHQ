@@ -44,7 +44,7 @@ export async function callGemini(prompt: string): Promise<string> {
     throw new Error(`Gemini API error: ${response.status}`);
   }
 
-  const data = await response.json();
+  const data: any = await response.json();
 
   const text =
     data?.candidates?.[0]?.content?.parts?.[0]?.text;
