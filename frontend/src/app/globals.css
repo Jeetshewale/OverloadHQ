@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Clean, organised light theme */
+    --background: 220 14% 97%;
+    --foreground: 220 24% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 24% 12%;
+    --primary: 151 70% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 220 20% 14%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 10% 46%;
+    --accent: 151 60% 92%;
+    --accent-foreground: 151 80% 22%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 86%;
+    --input: 220 13% 86%;
+    --ring: 151 70% 36%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Sleek, deep dark theme */
+    --background: 220 20% 7%;
+    --foreground: 210 20% 95%;
+    --card: 220 18% 11%;
+    --card-foreground: 210 20% 95%;
+    --primary: 151 75% 45%;
+    --primary-foreground: 220 20% 7%;
+    --secondary: 220 16% 16%;
+    --secondary-foreground: 210 20% 95%;
+    --muted: 220 14% 15%;
+    --muted-foreground: 215 15% 58%;
+    --accent: 151 50% 18%;
+    --accent-foreground: 210 20% 95%;
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 210 20% 95%;
+    --border: 220 14% 19%;
+    --input: 220 14% 19%;
+    --ring: 151 75% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Numeric keypad on mobile for weight/reps inputs */
+input[inputmode="numeric"],
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Smooth page transitions */
+.page-enter {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Glass card effect */
+.glass {
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* Glow border for highlights */
+.glow-border {
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.2),
+    inset 0 0 15px hsl(var(--primary) / 0.05);
+}
+
+/* PR badge shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.pr-badge {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--primary)) 0%,
+    hsl(151 80% 68%) 50%,
+    hsl(var(--primary)) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

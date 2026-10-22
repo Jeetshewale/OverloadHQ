@@ -1,0 +1,38 @@
+# Render Blueprint – Free Web Service
+# Only declares a web service (no Render database – using Neon instead).
+# Deploy: connect your GitHub repo in the Render dashboard.
+
+services:
+  - type: web
+    name: overloadhq-backend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: cd backend && npm install && npx prisma generate && npx tsc
+    startCommand: cd backend && npx prisma db push --skip-generate && node dist/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false     # Set in Render dashboard from Supabase
+      - key: DIRECT_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: INVITE_CODE
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.0-flash
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-20b
+      - key: AI_DAILY_LIMIT
+        value: "100"
+      - key: FEATURE_SOCIAL
+        value: "false"

@@ -1,0 +1,208 @@
+// ---------------------------------------------------------------
+// OverloadHQ – Prisma Schema
+// Database: Neon free Postgres
+// ---------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------
+
+enum Goal {
+  MUSCLE_BUILDING
+  STRENGTH
+  FAT_LOSS
+  ENDURANCE
+  GENERAL_FITNESS
+  RECOMPOSITION
+}
+
+enum ExperienceLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum PreferredUnit {
+  KG
+  LB
+}
+
+enum Visibility {
+  PRIVATE
+  FRIENDS
+}
+
+enum MuscleGroup {
+  BACK
+  CHEST
+  SHOULDERS
+  LEGS
+  BICEPS
+  TRICEPS
+  ARMS
+  CORE
+  FULL_BODY
+  CARDIO
+  OTHER
+}
+
+// ---------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------
+
+model User {
+  id              String          @id @default(cuid())
+  email           String          @unique
+  username        String          @unique
+  passwordHash    String
+  name            String
+  goal            Goal            @default(GENERAL_FITNESS)
+  experienceLevel ExperienceLevel @default(BEGINNER)
+  bodyWeightKg    Float?
+  preferredUnit   PreferredUnit   @default(KG)
+  visibility      Visibility      @default(PRIVATE)
+  onboardingDone  Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+
+  workouts      Workout[]
+  exercises     Exercise[]
+  aiCaches      AiCache[]
+  passwordReset PasswordReset[]
+
+  // Social (only used when FEATURE_SOCIAL=true)
+  sentFriendships     Friendship[]    @relation("FriendshipFrom")
+  receivedFriendships Friendship[]    @relation("FriendshipTo")
+  activityEvents      ActivityEvent[]
+  reactions           Reaction[]
+}
+
+model Workout {
+  id          String      @id @default(cuid())
+  userId      String
+  date        DateTime
+  dayName     String      // e.g. "Thursday", auto-derived from date
+  muscleGroup MuscleGroup
+  notes       String?
+  isSample    Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+
+  user User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sets ExerciseSet[]
+
+  @@index([userId, date])
+  @@index([userId])
+}
+
+model ExerciseSet {
+  id             String  @id @default(cuid())
+  workoutId      String
+  exerciseName   String
+  setNumber      Int
+  weightKg       Float
+  reps           Int
+  repsMax        Int?    // For ranges like 8-9: reps=8, repsMax=9
+  isFormImproved Boolean @default(false)
+  formNote       String?
+
+  workout Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  @@index([exerciseName])
+}
+
+model Exercise {
+  id              String      @id @default(cuid())
+  name            String
+  muscleGroup     MuscleGroup
+  createdByUserId String?
+
+  createdBy User? @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([name, createdByUserId])
+}
+
+model AiCache {
+  id          String   @id @default(cuid())
+  userId      String
+  payloadJson String
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model AiUsage {
+  date  DateTime @id // one row per day
+  count Int      @default(0)
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------
+// Social Models (only used when FEATURE_SOCIAL=true)
+// ---------------------------------------------------------------
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Friendship {
+  id        String           @id @default(cuid())
+  fromId    String
+  toId      String
+  status    FriendshipStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+
+  from User @relation("FriendshipFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to   User @relation("FriendshipTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@unique([fromId, toId])
+}
+
+model ActivityEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // e.g. "NEW_PR", "WORKOUT_LOGGED"
+  data      String   // JSON payload
+  createdAt DateTime @default(now())
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reactions Reaction[]
+
+  @@index([userId])
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  emoji     String   // e.g. "🔥", "💪"
+  createdAt DateTime @default(now())
+
+  event ActivityEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+}
