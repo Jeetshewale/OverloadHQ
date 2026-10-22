@@ -104,9 +104,10 @@ app.use((_req, res) => {
 app.use(errorHandler);
 
 // ---- Start ----
-app.listen(config.port, () => {
+const host = "0.0.0.0";
+app.listen(config.port, host, () => {
   logger.info(
-    { port: config.port, env: config.nodeEnv, app: APP_NAME },
+    { port: config.port, host, env: config.nodeEnv, app: APP_NAME },
     `${APP_NAME} backend running`
   );
   if (config.inviteCode) {

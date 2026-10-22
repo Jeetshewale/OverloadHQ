@@ -9,7 +9,7 @@ services:
     plan: free
     region: oregon
     buildCommand: cd backend && npm install --include=dev && npx prisma generate && npx tsc
-    startCommand: cd backend && npx prisma db push --skip-generate && node dist/index.js
+    startCommand: cd backend && node dist/index.js
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
