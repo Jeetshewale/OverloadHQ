@@ -157,7 +157,7 @@ export default function ProfilePage() {
                 <Label>Goal</Label>
                 <select
                   value={form.goal}
-                  onChange={(e) => setForm({ ...form, goal: e.target.value })}
+                  onChange={(e) => setForm({ ...form, goal: e.target.value as any })}
                   className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
                 >
                   {Object.entries(GOAL_LABELS).map(([k, v]) => (
@@ -169,7 +169,7 @@ export default function ProfilePage() {
                 <Label>Experience Level</Label>
                 <select
                   value={form.experienceLevel}
-                  onChange={(e) => setForm({ ...form, experienceLevel: e.target.value })}
+                  onChange={(e) => setForm({ ...form, experienceLevel: e.target.value as any })}
                   className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
                 >
                   {Object.entries(EXPERIENCE_LABELS).map(([k, v]) => (
@@ -181,7 +181,7 @@ export default function ProfilePage() {
                 <Label>Preferred Unit</Label>
                 <select
                   value={form.preferredUnit}
-                  onChange={(e) => setForm({ ...form, preferredUnit: e.target.value })}
+                  onChange={(e) => setForm({ ...form, preferredUnit: e.target.value as "KG" | "LB" })}
                   className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
                 >
                   <option value="KG">Kilograms (kg)</option>

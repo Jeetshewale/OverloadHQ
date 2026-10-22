@@ -49,13 +49,13 @@ export default function ProgressPage() {
   });
 
   // Extract unique exercise names
-  const allExercises = [
-    ...new Set(
+  const allExercises = Array.from(
+    new Set(
       (workoutsData?.workouts || []).flatMap((w: any) =>
         w.sets.map((s: any) => s.exerciseName)
       )
-    ),
-  ].sort() as string[];
+    )
+  ).sort() as string[];
 
   const filteredExercises = searchQuery
     ? allExercises.filter((e) =>

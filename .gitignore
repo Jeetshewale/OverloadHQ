@@ -5,5 +5,5 @@ dist/
 *.log
 .next/
 .vercel/
-.turbo/
+*.tsbuildinfo
 coverage/

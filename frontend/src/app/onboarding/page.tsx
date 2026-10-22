@@ -165,7 +165,7 @@ export default function OnboardingPage() {
               ].map((u) => (
                 <button
                   key={u.value}
-                  onClick={() => setPreferredUnit(u.value)}
+                  onClick={() => setPreferredUnit(u.value as "KG" | "LB")}
                   className={`p-6 rounded-xl border text-center transition-all ${
                     preferredUnit === u.value
                       ? "border-primary bg-primary/10 ring-1 ring-primary"
