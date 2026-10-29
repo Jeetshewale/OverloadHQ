@@ -1,9 +1,11 @@
 "use client";
 // ---------------------------------------------------------------
-// OverloadHQ – Sign Up Page (Blue & White Theme, Instant Signup)
+// OverloadHQ – Sign Up Page
+// Stitch Prototype styling with warm backgrounds, vermillion accents,
+// Plus Jakarta Sans display typography, and rounded-full pill buttons
 // ---------------------------------------------------------------
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
@@ -11,9 +13,7 @@ import { APP_NAME } from "@/lib/config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Dumbbell, Loader2, Shield, ArrowRight } from "lucide-react";
-import { Suspense } from "react";
+import { Loader2, Shield, ArrowRight, Zap } from "lucide-react";
 
 function SignUpForm() {
   const { register } = useAuth();
@@ -72,13 +72,13 @@ function SignUpForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="p-3 rounded-lg bg-destructive/10 text-destructive border border-destructive/20 text-xs font-medium">
+        <div className="p-3 rounded-2xl bg-destructive/10 text-destructive border border-destructive/20 text-xs font-semibold">
           {error}
         </div>
       )}
 
       <div className="space-y-1.5">
-        <Label htmlFor="name" className="text-xs font-semibold text-foreground">
+        <Label htmlFor="name" className="text-xs font-semibold text-on-surface">
           Full Name
         </Label>
         <Input
@@ -87,12 +87,12 @@ function SignUpForm() {
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           required
-          className="bg-card text-sm"
+          className="bg-surface-container-low rounded-xl h-11 text-sm border-border/60"
         />
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="username" className="text-xs font-semibold text-foreground">
+        <Label htmlFor="username" className="text-xs font-semibold text-on-surface">
           Username
         </Label>
         <Input
@@ -103,13 +103,13 @@ function SignUpForm() {
           required
           pattern="^[a-zA-Z0-9_]+$"
           minLength={3}
-          className="bg-card text-sm"
+          className="bg-surface-container-low rounded-xl h-11 text-sm border-border/60"
         />
-        <p className="text-[11px] text-muted-foreground">Letters, numbers, underscores only</p>
+        <p className="text-[11px] text-on-surface-variant">Letters, numbers, underscores only</p>
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="signup-email" className="text-xs font-semibold text-foreground">
+        <Label htmlFor="signup-email" className="text-xs font-semibold text-on-surface">
           Email Address
         </Label>
         <Input
@@ -120,12 +120,12 @@ function SignUpForm() {
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
           autoComplete="email"
-          className="bg-card text-sm"
+          className="bg-surface-container-low rounded-xl h-11 text-sm border-border/60"
         />
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="signup-password" className="text-xs font-semibold text-foreground">
+        <Label htmlFor="signup-password" className="text-xs font-semibold text-on-surface">
           Password
         </Label>
         <Input
@@ -137,13 +137,13 @@ function SignUpForm() {
           required
           minLength={8}
           autoComplete="new-password"
-          className="bg-card text-sm"
+          className="bg-surface-container-low rounded-xl h-11 text-sm border-border/60"
         />
       </div>
 
       {inviteFromUrl ? (
         <div className="space-y-1.5">
-          <Label htmlFor="invite" className="text-xs font-semibold text-foreground">
+          <Label htmlFor="invite" className="text-xs font-semibold text-on-surface">
             Invite Code (Optional)
           </Label>
           <Input
@@ -151,14 +151,14 @@ function SignUpForm() {
             placeholder="Invite code"
             value={form.inviteCode}
             onChange={(e) => setForm({ ...form, inviteCode: e.target.value })}
-            className="bg-card text-sm"
+            className="bg-surface-container-low rounded-xl h-11 text-sm border-border/60"
           />
         </div>
       ) : null}
 
       <Button
         type="submit"
-        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md active:scale-[0.98] transition-all"
+        className="w-full h-12 rounded-full bg-primary hover:opacity-95 text-primary-foreground font-display font-bold text-sm shadow-md active:scale-[0.98] transition-all"
         disabled={loading}
       >
         {loading ? (
@@ -168,7 +168,7 @@ function SignUpForm() {
           </>
         ) : (
           <>
-            Get Started
+            Create Account
             <ArrowRight className="h-4 w-4 ml-1.5" />
           </>
         )}
@@ -179,37 +179,41 @@ function SignUpForm() {
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
-      <Card className="w-full max-w-md animate-fade-in shadow-xl border-border/80">
-        <CardHeader className="text-center pb-4">
-          <div className="mx-auto mb-3 h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/25 shadow-sm">
-            <Dumbbell className="h-6 w-6 text-primary" />
-          </div>
-          <CardTitle className="text-2xl font-bold tracking-tight text-foreground">Join {APP_NAME}</CardTitle>
-          <CardDescription className="text-muted-foreground text-sm">
-            Track workouts and achieve true progressive overload
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Suspense fallback={<div className="text-center py-6"><Loader2 className="h-6 w-6 animate-spin mx-auto text-primary" /></div>}>
-            <SignUpForm />
-          </Suspense>
-
-          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-secondary/50 p-2.5 rounded-lg border border-border/50">
-            <Shield className="h-4 w-4 flex-shrink-0 text-primary" />
-            <span>
-              Your workout data is private and securely encrypted. No tracking or ads.
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-background text-on-surface">
+      <div className="w-full max-w-md p-6 sm:p-8 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-xl space-y-6 animate-fade-in">
+        <div className="text-center space-y-2">
+          <Link href="/" className="inline-flex items-center gap-2 mb-2">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
+              <Zap className="h-5 w-5 fill-current" />
+            </div>
+            <span className="font-display text-2xl font-black tracking-tight text-on-surface">
+              Overload<span className="text-primary">HQ</span>
             </span>
-          </div>
-
-          <p className="text-center text-xs text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline font-semibold">
-              Log in
-            </Link>
+          </Link>
+          <h1 className="font-display text-xl font-bold text-on-surface">Start Progressive Overload</h1>
+          <p className="text-xs sm:text-sm text-on-surface-variant">
+            Create your account to log workouts and track strength
           </p>
-        </CardContent>
-      </Card>
+        </div>
+
+        <Suspense fallback={<div className="text-center py-6"><Loader2 className="h-6 w-6 animate-spin mx-auto text-primary" /></div>}>
+          <SignUpForm />
+        </Suspense>
+
+        <div className="flex items-center gap-2.5 text-xs text-on-surface-variant bg-surface-container-low p-3 rounded-2xl border border-border/60">
+          <Shield className="h-4 w-4 flex-shrink-0 text-primary" />
+          <span>
+            Your workout data is private and securely encrypted. No tracking or ads.
+          </span>
+        </div>
+
+        <p className="text-center text-xs text-on-surface-variant">
+          Already have an account?{" "}
+          <Link href="/login" className="text-primary hover:underline font-bold">
+            Log in
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

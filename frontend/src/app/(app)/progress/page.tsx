@@ -1,8 +1,8 @@
 "use client";
 // ---------------------------------------------------------------
 // OverloadHQ – Progress Page
-// Exercise charts, split-based progressive overload tracking,
-// weekly comparisons, auto-generated descriptions, PRs
+// Stitch Prototype-inspired styling with vermillion charts,
+// warm card surfaces, pill tabs, and tactile overload cards
 // ---------------------------------------------------------------
 
 import { useState } from "react";
@@ -36,6 +36,7 @@ import {
   ChevronDown,
   Dumbbell,
   BarChart3,
+  Flame,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -113,99 +114,114 @@ export default function ProgressPage() {
   const comparison = progressData?.comparison;
   const description = progressData?.description;
 
-  // Blue-themed chart colors
-  const chartColor = "hsl(217, 91%, 60%)";
-  const chartColorFaded = "hsl(217, 91%, 60%, 0.1)";
+  // Vermillion-themed chart colors
+  const chartVermillion = "hsl(12, 100%, 54%)";
+  const chartVermillionLight = "hsl(12, 100%, 54%, 0.15)";
+  const chartPurple = "hsl(255, 60%, 65%)";
+  const chartAmber = "hsl(38, 100%, 50%)";
 
   return (
-    <div className="space-y-6 max-w-2xl mx-auto pb-12">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Progress</h1>
+    <div className="space-y-6 max-w-4xl mx-auto pb-16">
+      {/* Page Title & Context */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight">
+            Progress Analytics
+          </h1>
+          <p className="text-sm text-on-surface-variant mt-0.5">
+            Track progressive overload, strength gains, and all-time records.
+          </p>
+        </div>
       </div>
 
-      {/* Tab Switcher */}
-      <div className="flex gap-1 p-1 rounded-xl bg-muted/50 border border-border/50">
+      {/* Pill Tab Switcher */}
+      <div className="flex p-1.5 rounded-full bg-surface-container border border-border/60 max-w-md mx-auto">
         <button
           onClick={() => setActiveTab("overload")}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
             activeTab === "overload"
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              : "text-on-surface-variant hover:text-on-surface"
           }`}
         >
           <Zap className="h-4 w-4" />
-          Split Overload
+          <span>Split Overload</span>
         </button>
         <button
           onClick={() => setActiveTab("exercises")}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
             activeTab === "exercises"
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              : "text-on-surface-variant hover:text-on-surface"
           }`}
         >
           <BarChart3 className="h-4 w-4" />
-          Exercise Charts
+          <span>Exercise Charts</span>
         </button>
       </div>
 
       {/* === SPLIT OVERLOAD TAB === */}
       {activeTab === "overload" && (
-        <div className="space-y-4">
-          {/* Split Selector */}
-          <Card>
-            <CardContent className="p-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <Layers className="h-4 w-4 text-primary" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Your Split
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {WORKOUT_SPLITS.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setSelectedSplit(s)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
-                      selectedSplit === s
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-secondary/60 text-muted-foreground border-border/40 hover:bg-muted hover:text-foreground"
-                    }`}
-                  >
-                    {WORKOUT_SPLIT_LABELS[s]}
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-5">
+          {/* Split Selector Card */}
+          <div className="p-5 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-sm space-y-3">
+            <div className="flex items-center gap-2">
+              <Layers className="h-4 w-4 text-primary" />
+              <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                Select Your Split
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {WORKOUT_SPLITS.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSelectedSplit(s)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all border ${
+                    selectedSplit === s
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border-border/60"
+                  }`}
+                >
+                  {WORKOUT_SPLIT_LABELS[s]}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Overload Info Banner */}
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/15">
-            <Zap className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-primary/5 border border-primary/20">
+            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Flame className="h-4 w-4" />
+            </div>
             <div>
-              <p className="text-sm font-medium">Progressive Overload Tracking</p>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Progressive overload is tracked after every <strong>2 workout sessions</strong> per muscle group.
-                Your most recent 2 sessions for each muscle are compared below.
+              <p className="text-sm font-display font-bold text-on-surface">
+                Progressive Overload Rule
+              </p>
+              <p className="text-xs text-on-surface-variant leading-relaxed mt-0.5">
+                Overload is evaluated after every <strong>2 workout sessions</strong> per muscle group.
+                We calculate volume load differences and rep improvements across your most recent sessions.
               </p>
             </div>
           </div>
 
           {/* Overload Cards */}
           {overloadLoading ? (
-            <div className="py-12 text-center">
-              <Loader2 className="h-6 w-6 animate-spin mx-auto text-muted-foreground" />
-              <p className="text-xs text-muted-foreground mt-2">Analyzing your overload...</p>
+            <div className="py-16 text-center">
+              <Loader2 className="h-7 w-7 animate-spin mx-auto text-primary" />
+              <p className="text-xs font-medium text-on-surface-variant mt-2">
+                Analyzing progressive overload...
+              </p>
             </div>
           ) : (overloadData?.muscleAnalysis || []).length === 0 ? (
-            <Card className="border-dashed">
-              <CardContent className="py-8 text-center">
-                <Dumbbell className="h-8 w-8 mx-auto text-muted-foreground/40 mb-2" />
-                <p className="text-sm text-muted-foreground">
-                  No workout data yet. Log your first workout to start tracking overload!
-                </p>
-              </CardContent>
-            </Card>
+            <div className="py-12 text-center rounded-3xl border border-dashed border-border/80 p-8 space-y-3 bg-surface-container-low">
+              <Dumbbell className="h-8 w-8 mx-auto text-on-surface-variant/40" />
+              <p className="text-sm font-semibold text-on-surface">
+                No workout data yet for this split.
+              </p>
+              <p className="text-xs text-on-surface-variant">
+                Log your first workout to start tracking overload!
+              </p>
+            </div>
           ) : (
             <div className="space-y-3">
               {(overloadData?.muscleAnalysis || []).map((analysis: any) => (
@@ -231,69 +247,67 @@ export default function ProgressPage() {
 
       {/* === EXERCISE CHARTS TAB === */}
       {activeTab === "exercises" && (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Exercise selector */}
-          <div className="space-y-3">
+          <div className="p-5 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-sm space-y-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant" />
               <Input
-                placeholder="Search exercises..."
+                placeholder="Search exercises (e.g. Bench Press, Squat)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-11 bg-surface-container-low rounded-xl border-border/60"
               />
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              {filteredExercises.slice(0, 15).map((name) => (
+            <div className="flex flex-wrap gap-2 pt-1">
+              {filteredExercises.slice(0, 16).map((name) => (
                 <button
                   key={name}
                   onClick={() => {
                     setSelectedExercise(name);
                     setSearchQuery("");
                   }}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all border ${
                     selectedExercise === name
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-secondary-foreground hover:bg-accent"
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border-border/60"
                   }`}
                 >
                   {name}
                 </button>
               ))}
               {filteredExercises.length === 0 && (
-                <p className="text-sm text-muted-foreground py-2">
-                  No exercises found. Log some workouts first!
+                <p className="text-xs text-on-surface-variant py-2">
+                  No exercises found. Complete workouts to see your exercise list!
                 </p>
               )}
             </div>
           </div>
 
-          {/* Exercise Progress */}
+          {/* Exercise Progress Details */}
           {selectedExercise && (
             <>
               {progressLoading ? (
-                <div className="py-12 text-center">
-                  <Loader2 className="h-6 w-6 animate-spin mx-auto text-muted-foreground" />
+                <div className="py-16 text-center">
+                  <Loader2 className="h-7 w-7 animate-spin mx-auto text-primary" />
                 </div>
               ) : chartData.length === 0 ? (
-                <Card className="border-dashed">
-                  <CardContent className="py-8 text-center text-muted-foreground">
-                    No data for {selectedExercise}
-                  </CardContent>
-                </Card>
+                <div className="py-10 text-center rounded-3xl border border-dashed border-border/80 p-8 text-on-surface-variant">
+                  No data points recorded for {selectedExercise} yet.
+                </div>
               ) : (
                 <div className="space-y-4 animate-fade-in">
-                  {/* Description */}
+                  {/* Description Card */}
                   {description && (
-                    <Card className="glow-border">
-                      <CardContent className="py-4">
-                        <p className="text-sm leading-relaxed">{description}</p>
-                      </CardContent>
-                    </Card>
+                    <div className="p-4 rounded-2xl bg-card border border-primary/20 shadow-sm">
+                      <p className="text-sm text-on-surface leading-relaxed">
+                        {description}
+                      </p>
+                    </div>
                   )}
 
-                  {/* Week vs Week Comparison */}
+                  {/* Week vs Week Comparison Cards */}
                   {comparison && (
                     <div className="grid grid-cols-3 gap-3">
                       <ComparisonCard
@@ -326,135 +340,128 @@ export default function ProgressPage() {
                   )}
 
                   {/* Charts */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-sm">
-                        Max Weight ({unit.toLowerCase()})
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-48">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={chartData}>
-                            <defs>
-                              <linearGradient id="weightGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
-                                <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
-                              </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 14%, 18%)" />
-                            <XAxis
-                              dataKey="date"
-                              tick={{ fill: "hsl(215, 15%, 55%)", fontSize: 11 }}
-                              axisLine={{ stroke: "hsl(220, 14%, 18%)" }}
-                            />
-                            <YAxis
-                              tick={{ fill: "hsl(215, 15%, 55%)", fontSize: 11 }}
-                              axisLine={{ stroke: "hsl(220, 14%, 18%)" }}
-                            />
-                            <Tooltip
-                              contentStyle={{
-                                backgroundColor: "hsl(220, 18%, 10%)",
-                                border: "1px solid hsl(220, 14%, 18%)",
-                                borderRadius: "8px",
-                                fontSize: 12,
-                              }}
-                            />
-                            <Area
-                              type="monotone"
-                              dataKey="maxWeight"
-                              stroke={chartColor}
-                              fill="url(#weightGrad)"
-                              strokeWidth={2}
-                              dot={{ fill: chartColor, r: 4 }}
-                              activeDot={{ r: 6 }}
-                            />
-                          </AreaChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div className="p-5 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-sm">
+                    <h3 className="font-display font-bold text-sm text-on-surface mb-4">
+                      Max Weight Progression ({unit.toLowerCase()})
+                    </h3>
+                    <div className="h-56">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={chartData}>
+                          <defs>
+                            <linearGradient id="weightGradVermillion" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor={chartVermillion} stopOpacity={0.35} />
+                              <stop offset="95%" stopColor={chartVermillion} stopOpacity={0.0} />
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(150, 150, 150, 0.15)" />
+                          <XAxis
+                            dataKey="date"
+                            tick={{ fill: "rgba(150, 150, 150, 0.8)", fontSize: 11 }}
+                            axisLine={{ stroke: "rgba(150, 150, 150, 0.2)" }}
+                          />
+                          <YAxis
+                            tick={{ fill: "rgba(150, 150, 150, 0.8)", fontSize: 11 }}
+                            axisLine={{ stroke: "rgba(150, 150, 150, 0.2)" }}
+                          />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: "hsl(var(--card))",
+                              borderColor: "hsl(var(--border))",
+                              borderRadius: "16px",
+                              fontSize: 12,
+                              color: "hsl(var(--foreground))",
+                              boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                            }}
+                          />
+                          <Area
+                            type="monotone"
+                            dataKey="maxWeight"
+                            stroke={chartVermillion}
+                            fill="url(#weightGradVermillion)"
+                            strokeWidth={2.5}
+                            dot={{ fill: chartVermillion, r: 4 }}
+                            activeDot={{ r: 6 }}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
 
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-sm">Best Reps at Max Weight</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-48">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <LineChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 14%, 18%)" />
-                            <XAxis
-                              dataKey="date"
-                              tick={{ fill: "hsl(215, 15%, 55%)", fontSize: 11 }}
-                              axisLine={{ stroke: "hsl(220, 14%, 18%)" }}
-                            />
-                            <YAxis
-                              tick={{ fill: "hsl(215, 15%, 55%)", fontSize: 11 }}
-                              axisLine={{ stroke: "hsl(220, 14%, 18%)" }}
-                            />
-                            <Tooltip
-                              contentStyle={{
-                                backgroundColor: "hsl(220, 18%, 10%)",
-                                border: "1px solid hsl(220, 14%, 18%)",
-                                borderRadius: "8px",
-                                fontSize: 12,
-                              }}
-                            />
-                            <Line
-                              type="monotone"
-                              dataKey="bestReps"
-                              stroke="#60a5fa"
-                              strokeWidth={2}
-                              dot={{ fill: "#60a5fa", r: 4 }}
-                            />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div className="p-5 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-sm">
+                    <h3 className="font-display font-bold text-sm text-on-surface mb-4">
+                      Best Reps at Max Weight
+                    </h3>
+                    <div className="h-52">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={chartData}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(150, 150, 150, 0.15)" />
+                          <XAxis
+                            dataKey="date"
+                            tick={{ fill: "rgba(150, 150, 150, 0.8)", fontSize: 11 }}
+                            axisLine={{ stroke: "rgba(150, 150, 150, 0.2)" }}
+                          />
+                          <YAxis
+                            tick={{ fill: "rgba(150, 150, 150, 0.8)", fontSize: 11 }}
+                            axisLine={{ stroke: "rgba(150, 150, 150, 0.2)" }}
+                          />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: "hsl(var(--card))",
+                              borderColor: "hsl(var(--border))",
+                              borderRadius: "16px",
+                              fontSize: 12,
+                              color: "hsl(var(--foreground))",
+                            }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="bestReps"
+                            stroke={chartAmber}
+                            strokeWidth={2.5}
+                            dot={{ fill: chartAmber, r: 4 }}
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
 
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-sm">
-                        Estimated 1RM ({unit.toLowerCase()})
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-48">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <LineChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 14%, 18%)" />
-                            <XAxis
-                              dataKey="date"
-                              tick={{ fill: "hsl(215, 15%, 55%)", fontSize: 11 }}
-                              axisLine={{ stroke: "hsl(220, 14%, 18%)" }}
-                            />
-                            <YAxis
-                              tick={{ fill: "hsl(215, 15%, 55%)", fontSize: 11 }}
-                              axisLine={{ stroke: "hsl(220, 14%, 18%)" }}
-                            />
-                            <Tooltip
-                              contentStyle={{
-                                backgroundColor: "hsl(220, 18%, 10%)",
-                                border: "1px solid hsl(220, 14%, 18%)",
-                                borderRadius: "8px",
-                                fontSize: 12,
-                              }}
-                            />
-                            <Line
-                              type="monotone"
-                              dataKey="estimated1RM"
-                              stroke="#a78bfa"
-                              strokeWidth={2}
-                              dot={{ fill: "#a78bfa", r: 4 }}
-                            />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div className="p-5 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-sm">
+                    <h3 className="font-display font-bold text-sm text-on-surface mb-4">
+                      Estimated 1RM ({unit.toLowerCase()})
+                    </h3>
+                    <div className="h-52">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={chartData}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="rgba(150, 150, 150, 0.15)" />
+                          <XAxis
+                            dataKey="date"
+                            tick={{ fill: "rgba(150, 150, 150, 0.8)", fontSize: 11 }}
+                            axisLine={{ stroke: "rgba(150, 150, 150, 0.2)" }}
+                          />
+                          <YAxis
+                            tick={{ fill: "rgba(150, 150, 150, 0.8)", fontSize: 11 }}
+                            axisLine={{ stroke: "rgba(150, 150, 150, 0.2)" }}
+                          />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: "hsl(var(--card))",
+                              borderColor: "hsl(var(--border))",
+                              borderRadius: "16px",
+                              fontSize: 12,
+                              color: "hsl(var(--foreground))",
+                            }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="estimated1RM"
+                            stroke={chartPurple}
+                            strokeWidth={2.5}
+                            dot={{ fill: chartPurple, r: 4 }}
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
                 </div>
               )}
             </>
@@ -464,47 +471,45 @@ export default function ProgressPage() {
 
       {/* PRs Section */}
       {prsData?.recentPRs?.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-yellow-400" />
+        <div className="p-5 rounded-2xl md:rounded-3xl bg-card border border-border/80 shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <Trophy className="h-4 w-4 text-accent-amber" />
+            <h3 className="font-display font-bold text-base text-on-surface">
               All-Time Personal Records
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {prsData.prs
-                ?.filter((p: any) => p.type === "MAX_WEIGHT")
-                .slice(0, 10)
-                .map((pr: any, i: number) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between py-1.5 border-b border-border/50 last:border-0"
+            </h3>
+          </div>
+          <div className="divide-y divide-border/40">
+            {prsData.prs
+              ?.filter((p: any) => p.type === "MAX_WEIGHT")
+              .slice(0, 10)
+              .map((pr: any, i: number) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between py-2.5 first:pt-0 last:pb-0"
+                >
+                  <button
+                    onClick={() => {
+                      setSelectedExercise(pr.exerciseName);
+                      setActiveTab("exercises");
+                    }}
+                    className="text-sm font-semibold text-on-surface hover:text-primary transition-colors text-left"
                   >
-                    <button
-                      onClick={() => {
-                        setSelectedExercise(pr.exerciseName);
-                        setActiveTab("exercises");
-                      }}
-                      className="text-sm font-medium hover:text-primary transition-colors text-left"
-                    >
-                      {pr.exerciseName}
-                    </button>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground">
-                        {formatWeight(pr.value, unit)}
+                    {pr.exerciseName}
+                  </button>
+                  <div className="flex items-center gap-2">
+                    <span className="font-display font-bold text-sm text-on-surface tabular-nums">
+                      {formatWeight(pr.value, unit)}
+                    </span>
+                    {pr.isNew && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/15 text-primary font-bold">
+                        NEW
                       </span>
-                      {pr.isNew && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/20 text-primary font-bold">
-                          NEW
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
-                ))}
-            </div>
-          </CardContent>
-        </Card>
+                </div>
+              ))}
+          </div>
+        </div>
       )}
     </div>
   );
@@ -534,116 +539,141 @@ function MuscleOverloadCard({
     },
     STEADY: {
       icon: Minus,
-      color: "text-blue-400",
-      bg: "bg-blue-400/10",
-      border: "border-blue-400/20",
+      color: "text-accent-amber",
+      bg: "bg-accent-amber/10",
+      border: "border-accent-amber/20",
       label: "Steady",
     },
     RECOVERY: {
       icon: AlertTriangle,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10",
-      border: "border-amber-500/20",
+      color: "text-primary",
+      bg: "bg-primary/10",
+      border: "border-primary/20",
       label: "Recovery Phase",
     },
     BASELINE_SET: {
       icon: Clock,
-      color: "text-muted-foreground",
-      bg: "bg-muted/50",
-      border: "border-border/40",
+      color: "text-on-surface-variant",
+      bg: "bg-surface-container",
+      border: "border-border/60",
       label: "Day 1 of 2",
     },
     NO_SESSIONS: {
       icon: Dumbbell,
-      color: "text-muted-foreground",
-      bg: "bg-muted/30",
-      border: "border-border/30",
+      color: "text-on-surface-variant",
+      bg: "bg-surface-container",
+      border: "border-border/40",
       label: "No Data",
     },
   };
 
-  const config = statusConfig[analysis.status as keyof typeof statusConfig] || statusConfig.STEADY;
+  const config =
+    statusConfig[analysis.status as keyof typeof statusConfig] ||
+    statusConfig.STEADY;
   const StatusIcon = config.icon;
 
   return (
-    <Card className={`border ${config.border} overflow-hidden`}>
+    <div className={`rounded-2xl md:rounded-3xl border ${config.border} bg-card overflow-hidden shadow-sm transition-all`}>
       <button
         onClick={onToggle}
-        className="w-full text-left"
+        className="w-full text-left p-4 sm:p-5 hover:bg-surface-container-low transition-colors"
       >
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className={`h-10 w-10 rounded-xl ${config.bg} flex items-center justify-center`}>
-                <span className="text-lg">{MUSCLE_GROUP_EMOJIS[analysis.muscleGroup] || "💪"}</span>
-              </div>
-              <div>
-                <p className="text-sm font-semibold">
-                  {MUSCLE_GROUP_LABELS[analysis.muscleGroup] || analysis.muscleGroup}
-                </p>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className={`inline-flex items-center gap-1 text-[11px] font-medium ${config.color}`}>
-                    <StatusIcon className="h-3 w-3" />
-                    {config.label}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground">
-                    {analysis.sessionCount} session{analysis.sessionCount !== 1 ? "s" : ""}
-                  </span>
-                </div>
-              </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3.5">
+            <div
+              className={`h-11 w-11 rounded-2xl ${config.bg} flex items-center justify-center flex-shrink-0 text-xl`}
+            >
+              <span>{MUSCLE_GROUP_EMOJIS[analysis.muscleGroup] || "💪"}</span>
             </div>
-
-            <div className="flex items-center gap-3">
-              {/* Mini progress ring */}
-              {analysis.isOverloadEvaluated && (
-                <div className="text-right">
-                  {analysis.volumeChange !== 0 && (
-                    <span className={`inline-flex items-center gap-0.5 text-xs font-bold ${
-                      analysis.volumeChange > 0 ? "text-emerald-500" : "text-red-400"
-                    }`}>
-                      {analysis.volumeChange > 0 ? (
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      ) : (
-                        <ArrowDownRight className="h-3.5 w-3.5" />
-                      )}
-                      {analysis.volumeChange > 0 ? "+" : ""}{analysis.volumeChange}%
-                    </span>
-                  )}
-                  <p className="text-[10px] text-muted-foreground">volume</p>
-                </div>
-              )}
-              <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${expanded ? "rotate-180" : ""}`} />
+            <div>
+              <p className="font-display font-bold text-sm sm:text-base text-on-surface">
+                {MUSCLE_GROUP_LABELS[analysis.muscleGroup] || analysis.muscleGroup}
+              </p>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span
+                  className={`inline-flex items-center gap-1 text-xs font-semibold ${config.color}`}
+                >
+                  <StatusIcon className="h-3.5 w-3.5" />
+                  {config.label}
+                </span>
+                <span className="text-[11px] text-on-surface-variant">
+                  • {analysis.sessionCount} session{analysis.sessionCount !== 1 ? "s" : ""}
+                </span>
+              </div>
             </div>
           </div>
-        </CardContent>
+
+          <div className="flex items-center gap-3">
+            {analysis.isOverloadEvaluated && (
+              <div className="text-right">
+                {analysis.volumeChange !== 0 && (
+                  <span
+                    className={`inline-flex items-center gap-0.5 font-display font-bold text-xs sm:text-sm ${
+                      analysis.volumeChange > 0
+                        ? "text-emerald-500"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {analysis.volumeChange > 0 ? (
+                      <ArrowUpRight className="h-4 w-4" />
+                    ) : (
+                      <ArrowDownRight className="h-4 w-4" />
+                    )}
+                    {analysis.volumeChange > 0 ? "+" : ""}
+                    {analysis.volumeChange}%
+                  </span>
+                )}
+                <p className="text-[10px] uppercase font-semibold text-on-surface-variant">
+                  volume
+                </p>
+              </div>
+            )}
+            <ChevronDown
+              className={`h-4 w-4 text-on-surface-variant transition-transform ${
+                expanded ? "rotate-180" : ""
+              }`}
+            />
+          </div>
+        </div>
       </button>
 
       {/* Expanded Details */}
       {expanded && (
-        <div className="border-t border-border/40 bg-muted/20 p-4 space-y-3">
-          {/* Status message */}
-          <p className="text-xs text-muted-foreground leading-relaxed">
+        <div className="border-t border-border/40 bg-surface-container-low p-4 sm:p-5 space-y-4">
+          <p className="text-xs text-on-surface-variant leading-relaxed">
             {analysis.message}
           </p>
 
           {/* Session dates */}
           {analysis.session1Date && (
             <div className="flex items-center gap-3 text-xs">
-              <div className="flex-1 p-2 rounded-lg bg-background border border-border/50 text-center">
-                <p className="text-[10px] text-muted-foreground mb-0.5">Session 1</p>
-                <p className="font-medium">{analysis.session1Date}</p>
+              <div className="flex-1 p-3 rounded-2xl bg-card border border-border/60 text-center">
+                <p className="text-[10px] font-semibold text-on-surface-variant uppercase mb-0.5">
+                  Session 1
+                </p>
+                <p className="font-display font-bold text-sm text-on-surface">
+                  {analysis.session1Date}
+                </p>
                 {analysis.session1Volume != null && (
-                  <p className="text-[10px] text-muted-foreground mt-0.5">Vol: {analysis.session1Volume}</p>
+                  <p className="text-[11px] text-on-surface-variant mt-0.5">
+                    Vol: {analysis.session1Volume.toLocaleString()}
+                  </p>
                 )}
               </div>
               {analysis.session2Date && (
                 <>
                   <TrendingUp className="h-4 w-4 text-primary flex-shrink-0" />
-                  <div className="flex-1 p-2 rounded-lg bg-background border border-border/50 text-center">
-                    <p className="text-[10px] text-muted-foreground mb-0.5">Session 2</p>
-                    <p className="font-medium">{analysis.session2Date}</p>
+                  <div className="flex-1 p-3 rounded-2xl bg-card border border-border/60 text-center">
+                    <p className="text-[10px] font-semibold text-on-surface-variant uppercase mb-0.5">
+                      Session 2
+                    </p>
+                    <p className="font-display font-bold text-sm text-on-surface">
+                      {analysis.session2Date}
+                    </p>
                     {analysis.session2Volume != null && (
-                      <p className="text-[10px] text-muted-foreground mt-0.5">Vol: {analysis.session2Volume}</p>
+                      <p className="text-[11px] text-on-surface-variant mt-0.5">
+                        Vol: {analysis.session2Volume.toLocaleString()}
+                      </p>
                     )}
                   </div>
                 </>
@@ -653,30 +683,32 @@ function MuscleOverloadCard({
 
           {/* Per-exercise breakdown */}
           {analysis.exercises && analysis.exercises.length > 0 && (
-            <div className="space-y-1.5">
-              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="space-y-2 pt-1">
+              <p className="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
                 Exercise Breakdown
               </p>
               {analysis.exercises.map((ex: any, i: number) => (
                 <div
                   key={i}
-                  className={`flex items-center justify-between p-2 rounded-lg text-xs border ${
+                  className={`flex items-center justify-between p-3 rounded-xl text-xs border ${
                     ex.isOverload
-                      ? "bg-emerald-500/5 border-emerald-500/15"
-                      : "bg-background border-border/40"
+                      ? "bg-emerald-500/5 border-emerald-500/20"
+                      : "bg-card border-border/60"
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     {ex.isOverload ? (
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0" />
                     ) : (
-                      <Minus className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                      <Minus className="h-4 w-4 text-on-surface-variant flex-shrink-0" />
                     )}
-                    <span className="font-medium">{ex.name}</span>
+                    <span className="font-semibold text-on-surface">{ex.name}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+                  <div className="flex items-center gap-3 text-xs text-on-surface-variant font-medium">
                     <span>
-                      {ex.day1MaxWeight != null ? `${kgToDisplay(ex.day1MaxWeight)}→` : ""}
+                      {ex.day1MaxWeight != null
+                        ? `${kgToDisplay(ex.day1MaxWeight)}→`
+                        : ""}
                       {kgToDisplay(ex.day2MaxWeight)} {unit.toLowerCase()}
                     </span>
                     <span>
@@ -684,10 +716,17 @@ function MuscleOverloadCard({
                       {ex.day2Reps} reps
                     </span>
                     {ex.volumeChange != null && (
-                      <span className={`font-bold ${
-                        ex.volumeChange > 0 ? "text-emerald-500" : ex.volumeChange < 0 ? "text-red-400" : "text-muted-foreground"
-                      }`}>
-                        {ex.volumeChange > 0 ? "+" : ""}{ex.volumeChange}%
+                      <span
+                        className={`font-bold ${
+                          ex.volumeChange > 0
+                            ? "text-emerald-500"
+                            : ex.volumeChange < 0
+                            ? "text-red-500"
+                            : "text-on-surface-variant"
+                        }`}
+                      >
+                        {ex.volumeChange > 0 ? "+" : ""}
+                        {ex.volumeChange}%
                       </span>
                     )}
                   </div>
@@ -697,7 +736,7 @@ function MuscleOverloadCard({
           )}
         </div>
       )}
-    </Card>
+    </div>
   );
 }
 
@@ -718,34 +757,36 @@ function ComparisonCard({
   change: number;
 }) {
   return (
-    <Card>
-      <CardContent className="p-3 text-center">
-        <p className="text-[10px] text-muted-foreground font-medium mb-1">
-          {label}
-        </p>
-        <p className="text-lg font-bold">
-          {curr}
-          {unit && <span className="text-xs font-normal text-muted-foreground ml-0.5">{unit}</span>}
-        </p>
-        <div
-          className={`flex items-center justify-center gap-1 text-xs font-medium mt-0.5 ${
-            direction === "up"
-              ? "text-emerald-400"
-              : direction === "down"
-              ? "text-red-400"
-              : "text-muted-foreground"
-          }`}
-        >
-          {direction === "up" ? (
-            <TrendingUp className="h-3 w-3" />
-          ) : direction === "down" ? (
-            <TrendingDown className="h-3 w-3" />
-          ) : (
-            <Minus className="h-3 w-3" />
-          )}
-          {change !== 0 ? `${change > 0 ? "+" : ""}${change}%` : "="}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="p-3.5 rounded-2xl bg-card border border-border/80 shadow-sm text-center">
+      <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">
+        {label}
+      </p>
+      <p className="font-display font-extrabold text-lg text-on-surface tabular-nums">
+        {curr}
+        {unit && (
+          <span className="text-xs font-normal text-on-surface-variant ml-0.5">
+            {unit}
+          </span>
+        )}
+      </p>
+      <div
+        className={`flex items-center justify-center gap-1 text-xs font-bold mt-0.5 ${
+          direction === "up"
+            ? "text-emerald-500"
+            : direction === "down"
+            ? "text-red-500"
+            : "text-on-surface-variant"
+        }`}
+      >
+        {direction === "up" ? (
+          <TrendingUp className="h-3 w-3" />
+        ) : direction === "down" ? (
+          <TrendingDown className="h-3 w-3" />
+        ) : (
+          <Minus className="h-3 w-3" />
+        )}
+        {change !== 0 ? `${change > 0 ? "+" : ""}${change}%` : "="}
+      </div>
+    </div>
   );
 }

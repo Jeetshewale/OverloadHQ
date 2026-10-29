@@ -4,46 +4,68 @@
 
 @layer base {
   :root {
-    /* Clean, premium Blue & White light theme */
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%; /* Electric Royal Blue #2563eb */
-    --primary-foreground: 0 0% 100%; /* Pure White */
-    --secondary: 214 95% 93%; /* Soft Ice Blue */
-    --secondary-foreground: 221 83% 40%;
-    --muted: 214 32% 91%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 214 95% 92%;
-    --accent-foreground: 221 83% 45%;
-    --destructive: 0 84% 60%;
+    /* OverloadHQ – Warm Cream & Vermillion Light Theme */
+    --background: 36 100% 97%;       /* #FFF9EF warm cream */
+    --foreground: 30 10% 10%;        /* #1D1B16 warm near-black */
+    --card: 0 0% 100%;               /* #FFFFFF pure white cards */
+    --card-foreground: 30 10% 10%;
+    --primary: 8 100% 44%;           /* #E12900 vermillion */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 8% 89%;          /* #E5E2E1 warm gray */
+    --secondary-foreground: 30 10% 28%;
+    --muted: 36 30% 94%;             /* #F3EDE3 warm muted */
+    --muted-foreground: 15 12% 42%;  /* #926F67 warm brown */
+    --accent: 36 30% 94%;
+    --accent-foreground: 30 10% 10%;
+    --destructive: 0 84% 37%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 88%;
-    --input: 214 32% 88%;
-    --ring: 221 83% 53%;
-    --radius: 0.75rem;
+    --border: 30 15% 88%;            /* warm border */
+    --input: 30 15% 88%;
+    --ring: 8 100% 44%;
+    --radius: 1rem;
+
+    /* Extended prototype tokens */
+    --surface-container: 36 24% 93%;    /* #F3EDE3 */
+    --surface-container-low: 36 40% 96%; /* #F9F3E9 */
+    --surface-container-high: 36 18% 90%; /* #EDE7DE */
+    --surface-dim: 36 14% 85%;
+    --on-surface-variant: 15 20% 30%;
+    --accent-amber: 36 100% 50%;
+    --accent-mint: 160 70% 52%;
+    --card-hero: 0 0% 4%;              /* #0B0B0B dark hero */
+    --card-hero-foreground: 0 0% 100%;
   }
 
   .dark {
-    /* Sleek, deep Midnight Navy & Pure White dark theme */
-    --background: 222 47% 7%; /* Obsidian Midnight Navy #0a0f1d */
-    --foreground: 210 40% 98%; /* Crisp Pure White #f8fafc */
-    --card: 222 42% 11%; /* Deep Sleek Navy #0f172a */
-    --card-foreground: 210 40% 98%; /* Crisp Pure White */
-    --primary: 217 91% 60%; /* Vibrant Electric Blue #3b82f6 */
-    --primary-foreground: 0 0% 100%; /* Pure White */
-    --secondary: 222 36% 18%; /* Dark Navy Slate */
-    --secondary-foreground: 210 40% 98%;
-    --muted: 222 35% 15%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 210 40% 98%;
+    /* OverloadHQ – Near-Black & Vermillion Dark Theme */
+    --background: 0 0% 4%;           /* #0A0A0A near-black */
+    --foreground: 36 20% 92%;        /* warm white */
+    --card: 240 3% 12%;              /* #1C1C1E dark card */
+    --card-foreground: 36 20% 92%;
+    --primary: 10 100% 54%;          /* #FF3B14 bright vermillion */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 36 20% 92%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 30 10% 55%;
+    --accent: 10 100% 54%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 20%;
-    --input: 222 30% 20%;
-    --ring: 217 91% 60%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 10 100% 54%;
+
+    /* Extended dark tokens */
+    --surface-container: 0 0% 10%;
+    --surface-container-low: 0 0% 8%;
+    --surface-container-high: 0 0% 14%;
+    --surface-dim: 0 0% 6%;
+    --on-surface-variant: 30 10% 60%;
+    --accent-amber: 36 100% 50%;
+    --accent-mint: 160 70% 52%;
+    --card-hero: 0 0% 4%;
+    --card-hero-foreground: 0 0% 100%;
   }
 }
 
@@ -55,10 +77,13 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
   }
 }
 
-/* Blazing fast tactile response on click / tap */
+/* ----------------------------------------------------------- */
+/* Blazing fast tactile response on click / tap                */
+/* ----------------------------------------------------------- */
 button, a, [role="button"], input[type="button"], input[type="submit"] {
   touch-action: manipulation;
 }
@@ -68,7 +93,9 @@ button:active:not(:disabled), .btn-fast:active {
   transition: transform 0.05s ease-out;
 }
 
-/* Custom scrollbar */
+/* ----------------------------------------------------------- */
+/* Custom scrollbar                                            */
+/* ----------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -84,7 +111,9 @@ button:active:not(:disabled), .btn-fast:active {
   background: hsl(var(--muted-foreground));
 }
 
-/* Numeric keypad on mobile for weight/reps inputs */
+/* ----------------------------------------------------------- */
+/* Numeric keypad on mobile for weight/reps inputs             */
+/* ----------------------------------------------------------- */
 input[inputmode="numeric"],
 input[type="number"] {
   -moz-appearance: textfield;
@@ -95,43 +124,98 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-/* Smooth page transitions */
-.page-enter {
-  animation: fade-in 0.2s ease-out;
-}
-
-/* Glass card effect with blue subtle tint */
+/* ----------------------------------------------------------- */
+/* Glass effect                                                */
+/* ----------------------------------------------------------- */
 .glass {
-  background: hsl(var(--card) / 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid hsl(var(--border) / 0.6);
+  background: hsl(var(--background) / 0.80);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-/* Glow border for blue highlights */
-.glow-border {
-  box-shadow: 0 0 15px hsl(var(--primary) / 0.25),
-    inset 0 0 15px hsl(var(--primary) / 0.08);
+/* ----------------------------------------------------------- */
+/* Hero card (dark, warm)                                      */
+/* ----------------------------------------------------------- */
+.hero-card {
+  background: hsl(var(--card-hero));
+  color: hsl(var(--card-hero-foreground));
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
-/* PR badge shimmer in electric & cyan blue */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 9999px;
+  background: hsl(var(--primary) / 0.15);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------- */
+/* PR badge shimmer in vermillion + amber                      */
+/* ----------------------------------------------------------- */
 @keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
 .pr-badge {
   background: linear-gradient(
     90deg,
     hsl(var(--primary)) 0%,
-    hsl(199 89% 65%) 50%,
+    hsl(var(--accent-amber)) 50%,
     hsl(var(--primary)) 100%
   );
   background-size: 200% auto;
   animation: shimmer 3s linear infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ----------------------------------------------------------- */
+/* Glow border (vermillion)                                    */
+/* ----------------------------------------------------------- */
+.glow-border {
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.15),
+    inset 0 0 15px hsl(var(--primary) / 0.05);
+}
+
+/* ----------------------------------------------------------- */
+/* Pill shape utility                                          */
+/* ----------------------------------------------------------- */
+.pill {
+  border-radius: 9999px;
+}
+
+/* ----------------------------------------------------------- */
+/* Surface container backgrounds                               */
+/* ----------------------------------------------------------- */
+.surface-container {
+  background: hsl(var(--surface-container));
+}
+.surface-container-low {
+  background: hsl(var(--surface-container-low));
+}
+.surface-container-high {
+  background: hsl(var(--surface-container-high));
+}
+
+/* ----------------------------------------------------------- */
+/* Safe area for mobile bottom bar                             */
+/* ----------------------------------------------------------- */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ----------------------------------------------------------- */
+/* Smooth page transitions                                     */
+/* ----------------------------------------------------------- */
+.page-enter {
+  animation: fade-in 0.2s ease-out;
 }
