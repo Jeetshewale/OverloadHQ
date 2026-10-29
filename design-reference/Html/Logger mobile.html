@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100vh;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#dfd9d0", "primary-fixed-dim": "#ffb4a4", "on-primary-container": "#fffbff", "surface-tint": "#b82000", "on-surface": "#1d1b16", "card-light-hero": "#0B0B0B", "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#8d1600", "surface-container-highest": "#e7e2d8", "inverse-surface": "#32302a", "surface-container": "#f3ede3", "primary-fixed": "#ffdad3", "on-error": "#ffffff", "on-background": "#1d1b16", "secondary-fixed": "#e5e2e1", "secondary": "#5f5e5e", "tertiary-container": "#6f5fea", "primary": "#b41f00", "accent-amber": "#FF9500", "outline-variant": "#e7bdb4", "card-dark-hero": "#1C1C1E", "surface-variant": "#e7e2d8", "on-tertiary-fixed-variant": "#4029ba", "on-secondary-fixed-variant": "#474646", "error-container": "#ffdad6", "error": "#ba1a1a", "outline": "#926f67", "on-tertiary": "#ffffff", "on-error-container": "#93000a", "secondary-container": "#e5e2e1", "secondary-fixed-dim": "#c9c6c5", "tertiary-fixed": "#e4dfff", "on-primary-fixed": "#3e0500", "accent-mint": "#2ED8A3", "surface-dark": "#0A0A0A", "on-secondary-container": "#656464", "primary-container": "#e12900", "surface-container-low": "#f9f3e9", "on-tertiary-container": "#fffbff", "surface": "#fff9ef", "tertiary-fixed-dim": "#c6bfff", "tertiary": "#5644d0", "on-primary": "#ffffff", "on-tertiary-fixed": "#160066", "on-secondary-fixed": "#1c1b1b", "background": "#fff9ef", "inverse-primary": "#ffb4a4", "inverse-on-surface": "#f6f0e6", "on-surface-variant": "#5d3f39", "surface-bright": "#fff9ef", "surface-container-high": "#ede7de" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "3rem", "space-md": "1.25rem", "space-sm": "0.75rem", "space-lg": "2rem", "gutter": "1.5rem", "margin-tablet": "2rem", "space-xs": "0.375rem", "margin-mobile": "1.25rem", "gutter-mobile": "1rem", "space-xl": "3.5rem" }, fontFamily: { "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "display-hero-mobile": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "display-hero": ["Plus Jakarta Sans"] }, fontSize: { "headline-lg-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.015em", fontWeight: "700" }], "body-sm": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "-0.005em", fontWeight: "400" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }], "headline-md": ["24px", { lineHeight: "30px", letterSpacing: "-0.015em", fontWeight: "700" }], "headline-sm": ["20px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "600" }], "display-hero-mobile": ["40px", { lineHeight: "44px", letterSpacing: "-0.025em", fontWeight: "800" }], "label-lg": ["15px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-lg": ["36px", { lineHeight: "42px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-md": ["13px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" }], "body-md": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }], "display-hero": ["56px", { lineHeight: "60px", letterSpacing: "-0.03em", fontWeight: "800" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Go Back" class="w-11 h-11 -ml-2 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container transition-transform active:scale-95" id="nav-back-btn" type="button"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><img alt="OverloadHQ Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VODF08t-g8B7E9-TCwzC1ZBCDkepxUDZgFq9mHIP4hsLbDoaC0i7JFW9z-7c64iy_FPAd7VkQrMJfTIrSncD5BHcA1UHBBxo6Z10sI-S8TzVtpw1llGMy--8RnQciP90IR44Jn7cfzkcZ4Oiiyb82tFF9T5QBX9vZiNk6QYv9R4ht6PxFQnP9-Oaz8vnNYP8i3cj97pA8uvlRlqQ4AU-rcIokIbfKBVf7Sa3Dp3PT7QQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Active Workout</span></div><div class="flex items-center gap-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFV9Kx3OqofRuWx15vg4jiatrfWSDH-ZjEQYE0Vf-UHHszfbDsusYMSs9wGWc4OdKwQRlPCMra-FjPrMe3b7NLAvOejVxG-YO1a4CT9TFTEwcozRyQuZQcQxobA7YosSLxaefOkVaQkQ61PnplJAh-PXdRgV13g-o46KqSJ9gQ4TmUrHTImsLVq6O2HNThbX7ezfwcOig4TyL-U_9SOTUXUXYNcOwe9l89aUYa1ap1"/></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-28" id="exercises-wrapper">
+<!-- Top Session Hub: Dark Anchor Pill -->
+<section class="px-gutter-mobile pt-space-xs mb-space-md">
+<div class="bg-card-light-hero text-on-primary rounded-lg p-space-md shadow-xl flex flex-col gap-space-sm relative overflow-hidden">
+<!-- Background Ambient Accent Glow -->
+<div class="absolute -right-12 -top-12 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center justify-between z-10">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-accent-mint animate-pulse" id="status-pulse"></span>
+<span class="font-headline-sm text-headline-sm tracking-tight text-surface-container-lowest">Upper Body Push A</span>
+</div>
+<div class="bg-surface-dark/80 px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[15px] text-accent-amber" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-md text-label-md tabular-nums text-surface-container-lowest tracking-wide" id="session-timer">34:18</span>
+</div>
+</div>
+<!-- Rest Countdown Bar & Audio Cue Indicator -->
+<div class="bg-card-dark-hero rounded-xl p-space-sm flex items-center justify-between z-10 shadow-sm">
+<div class="flex items-center gap-space-sm">
+<!-- Circular Progress Ring (SVG) -->
+<div class="relative w-9 h-9 flex items-center justify-center shrink-0">
+<svg class="w-9 h-9 transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-dark/90" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary-container transition-all duration-1000 ease-linear" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" id="rest-ring" stroke="currentColor" stroke-dasharray="72, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<span class="material-symbols-outlined text-[16px] text-primary-fixed absolute">bedtime</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">Rest Recovery</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-surface-container-lowest tabular-nums" id="rest-counter">01:45</span>
+<span class="font-label-sm text-label-sm text-secondary-fixed-dim" id="rest-status-text">remaining</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="bg-surface-dark active:scale-95 text-surface-container-lowest px-2.5 py-1.5 rounded-full font-label-sm text-label-sm transition-transform flex items-center gap-1 shadow-sm" id="add-rest-btn">
+<span>+30s</span>
+</button>
+<button class="bg-surface-dark active:scale-95 text-secondary-fixed-dim hover:text-surface-container-lowest px-2.5 py-1.5 rounded-full font-label-sm text-label-sm transition-transform flex items-center gap-0.5" id="skip-rest-btn">
+<span class="material-symbols-outlined text-[14px]">fast_forward</span>
+<span>Skip</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Exercise 1: Barbell Bench Press Card -->
+<section class="exercise-card px-gutter-mobile mb-space-md" data-exercise="Barbell Bench Press">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<!-- Movement Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Barbell Bench Press</h2>
+<span class="bg-tertiary/10 text-tertiary px-2.5 py-0.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider">Chest / Triceps</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-accent-amber">history</span>
+<span>Last: <strong class="font-semibold text-on-surface">87.5 kg × 8, 8, 7</strong></span>
+</p>
+</div>
+<button aria-label="Exercise options" class="exercise-menu-btn w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<!-- Set Table Headers -->
+<div class="grid grid-cols-12 gap-1 px-1 py-1 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-center items-center">
+<span class="col-span-2 text-left">Set</span>
+<span class="col-span-2">Prev</span>
+<span class="col-span-3">kg</span>
+<span class="col-span-2">Reps</span>
+<span class="col-span-1">RPE</span>
+<span class="col-span-2 text-right pr-1">Done</span>
+</div>
+<!-- Set Rows -->
+<div class="flex flex-col gap-1.5 sets-container" id="bench-rows-container">
+<!-- Row 1: Completed -->
+<div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container-low/70 transition-all">
+<div class="col-span-2 flex items-center gap-1">
+<span class="set-number-badge w-5 h-5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center font-bold">1</span>
+</div>
+<span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">87.5</span>
+<div class="col-span-3">
+<div class="flex items-center justify-center bg-surface-container-highest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+<input class="weight-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums" type="text" value="90.0"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center justify-center bg-surface-container-highest rounded-full px-1 py-0.5 shadow-sm">
+<input class="reps-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums" type="text" value="8"/>
+</div>
+</div>
+<span class="col-span-1 text-center font-label-sm text-label-sm text-on-surface-variant tabular-nums">8.5</span>
+<div class="col-span-2 flex justify-end pr-1">
+<button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center transition-all shadow-sm" data-checked="true">
+<span class="material-symbols-outlined text-[18px] font-bold">check</span>
+</button>
+</div>
+</div>
+<!-- Row 2: Completed -->
+<div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container-low/70 transition-all">
+<div class="col-span-2 flex items-center gap-1">
+<span class="set-number-badge w-5 h-5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center font-bold">2</span>
+</div>
+<span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">87.5</span>
+<div class="col-span-3">
+<div class="flex items-center justify-center bg-surface-container-highest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+<input class="weight-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums" type="text" value="90.0"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center justify-center bg-surface-container-highest rounded-full px-1 py-0.5 shadow-sm">
+<input class="reps-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums" type="text" value="8"/>
+</div>
+</div>
+<span class="col-span-1 text-center font-label-sm text-label-sm text-on-surface-variant tabular-nums">9.0</span>
+<div class="col-span-2 flex justify-end pr-1">
+<button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center transition-all shadow-sm" data-checked="true">
+<span class="material-symbols-outlined text-[18px] font-bold">check</span>
+</button>
+</div>
+</div>
+<!-- Row 3: Active Working Set -->
+<div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container transition-all">
+<div class="col-span-2 flex items-center gap-1">
+<span class="set-number-badge w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center font-bold">3</span>
+</div>
+<span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">87.5</span>
+<div class="col-span-3">
+<div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+<input class="weight-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface rounded-full py-0.5 outline-none tabular-nums" type="text" value="90.0"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<input class="reps-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface rounded-full py-0.5 outline-none tabular-nums" type="text" value="7"/>
+</div>
+</div>
+<div class="col-span-1 text-center">
+<span class="font-label-sm text-label-sm text-on-surface tabular-nums font-semibold">9.5</span>
+</div>
+<div class="col-span-2 flex justify-end pr-1">
+<button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center transition-all" data-checked="false">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+</div>
+</div>
+<!-- Row 4: Drop Set (Unchecked) -->
+<div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container-low/40 transition-all">
+<div class="col-span-2 flex items-center gap-1">
+<span class="set-number-badge px-1.5 py-0.5 rounded-full bg-accent-amber/20 text-accent-amber font-label-sm text-label-sm font-bold">Drop</span>
+</div>
+<span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">75.0</span>
+<div class="col-span-3">
+<div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+<input class="weight-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums py-0.5" type="text" value="75.0"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<input class="reps-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums py-0.5" type="text" value="12"/>
+</div>
+</div>
+<span class="col-span-1 text-center font-label-sm text-label-sm text-on-surface-variant tabular-nums">10.0</span>
+<div class="col-span-2 flex justify-end pr-1">
+<button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center transition-all" data-checked="false">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Add Set Pill Button -->
+<button class="add-set-trigger mt-space-xs w-full py-2.5 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-[0.99] font-label-md text-label-md text-on-surface flex items-center justify-center gap-1.5 transition-all" id="add-set-bench-btn">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add Set</span>
+</button>
+</div>
+</section>
+<!-- Exercise 2: Incline Dumbbell Flyes Card -->
+<section class="exercise-card px-gutter-mobile mb-space-md" data-exercise="Incline Dumbbell Flyes">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<!-- Movement Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Incline Dumbbell Flyes</h2>
+<span class="bg-accent-mint/15 text-accent-mint px-2.5 py-0.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-bold">Pectorals</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-accent-amber">history</span>
+<span>Last: <strong class="font-semibold text-on-surface">22 kg × 12, 10</strong></span>
+</p>
+</div>
+<button aria-label="Exercise options" class="exercise-menu-btn w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<!-- Set Table Headers -->
+<div class="grid grid-cols-12 gap-1 px-1 py-1 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-center items-center">
+<span class="col-span-2 text-left">Set</span>
+<span class="col-span-2">Prev</span>
+<span class="col-span-3">kg / db</span>
+<span class="col-span-2">Reps</span>
+<span class="col-span-1">RPE</span>
+<span class="col-span-2 text-right pr-1">Done</span>
+</div>
+<!-- Set Rows -->
+<div class="flex flex-col gap-1.5 sets-container" id="flyes-rows-container">
+<!-- Row 1 -->
+<div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container transition-all">
+<div class="col-span-2 flex items-center gap-1">
+<span class="set-number-badge w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center font-bold">1</span>
+</div>
+<span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">22.0</span>
+<!-- Tactile Stepper for Dumbbell Weight -->
+<div class="col-span-3 flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90" data-target="flye-w1">-</button>
+<input class="weight-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface outline-none tabular-nums" id="flye-w1" type="text" value="24.0"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90" data-target="flye-w1">+</button>
+</div>
+<!-- Stepper for Reps -->
+<div class="col-span-2 flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90" data-target="flye-r1">-</button>
+<input class="reps-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface outline-none tabular-nums" id="flye-r1" type="text" value="12"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90" data-target="flye-r1">+</button>
+</div>
+<span class="col-span-1 text-center font-label-sm text-label-sm text-on-surface tabular-nums font-semibold">8.0</span>
+<div class="col-span-2 flex justify-end pr-1">
+<button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center transition-all" data-checked="false">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container-low/40 transition-all">
+<div class="col-span-2 flex items-center gap-1">
+<span class="set-number-badge w-5 h-5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center font-bold">2</span>
+</div>
+<span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">22.0</span>
+<div class="col-span-3 flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+<input class="weight-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums py-0.5" type="text" value="24.0"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+</div>
+<div class="col-span-2 flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+<button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90">-</button>
+<input class="reps-input w-full bg-transparent text-center font-label-md text-label-md text-on-surface outline-none tabular-nums py-0.5" type="text" value="10"/>
+<button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90">+</button>
+</div>
+<span class="col-span-1 text-center font-label-sm text-label-sm text-on-surface-variant tabular-nums">8.5</span>
+<div class="col-span-2 flex justify-end pr-1">
+<button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center transition-all" data-checked="false">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Add Set Pill Button -->
+<button class="add-set-trigger mt-space-xs w-full py-2.5 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-[0.99] font-label-md text-label-md text-on-surface flex items-center justify-center gap-1.5 transition-all" id="add-set-flyes-btn">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add Set</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Quick Add Movement Button -->
+<section class="px-gutter-mobile mb-space-lg flex justify-center">
+<button class="w-full py-3 rounded-full bg-surface-container-high text-on-surface hover:bg-surface-container-highest active:scale-[0.98] font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm transition-transform" id="add-exercise-btn">
+<span class="material-symbols-outlined text-[20px] text-primary">fitness_center</span>
+<span>+ Add Exercise</span>
+</button>
+</section>
+<!-- Sticky Bottom Workout Action Bar -->
+<aside class="fixed bottom-0 left-0 right-0 p-gutter-mobile pb-safe bg-surface/90 backdrop-blur-md z-40">
+<div class="max-w-md mx-auto flex items-center gap-space-sm">
+<button aria-label="Pause or Discard" class="w-12 h-12 shrink-0 rounded-full bg-surface-container-highest text-on-surface-variant active:scale-95 flex items-center justify-center transition-transform hover:bg-surface-container" id="discard-btn">
+<span class="material-symbols-outlined text-[20px]" id="pause-icon">pause</span>
+</button>
+<button class="flex-1 h-12 rounded-full bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-lg text-label-lg active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg transition-transform" id="finish-workout-btn">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span id="finish-label">Finish Workout (18,240 kg)</span>
+</button>
+</div>
+</aside>
+<!-- Action Sheet Modal: Add Exercise -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end hidden opacity-0 transition-opacity duration-200" id="exercise-sheet">
+<div class="bg-surface rounded-t-xl max-h-[85vh] p-space-md shadow-2xl flex flex-col gap-3 transform translate-y-full transition-transform duration-300 ease-out" id="exercise-sheet-content">
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto mb-1"></div>
+<div class="flex items-center justify-between pb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Select Exercise</h3>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface" id="close-exercise-sheet"><span class="material-symbols-outlined text-[20px]">close</span></button>
+</div>
+<div class="flex flex-col gap-2 overflow-y-auto max-h-80 pr-1">
+<button class="exercise-picker-item flex items-center justify-between p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container active:scale-[0.99] text-left transition-all" data-category="Shoulders" data-name="Overhead Shoulder Press" data-prev="55.0 kg × 8">
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm text-on-surface font-semibold">Overhead Shoulder Press</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Shoulders / Delts • Barbell</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">add_circle</span>
+</button>
+<button class="exercise-picker-item flex items-center justify-between p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container active:scale-[0.99] text-left transition-all" data-category="Triceps" data-name="Tricep Rope Pushdown" data-prev="32.5 kg × 12">
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm text-on-surface font-semibold">Tricep Rope Pushdown</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Triceps • Cable</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">add_circle</span>
+</button>
+<button class="exercise-picker-item flex items-center justify-between p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container active:scale-[0.99] text-left transition-all" data-category="Chest" data-name="Dips (Chest Focus)" data-prev="BW + 15 kg × 10">
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm text-on-surface font-semibold">Dips (Chest Focus)</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Chest / Triceps • Bodyweight</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">add_circle</span>
+</button>
+<button class="exercise-picker-item flex items-center justify-between p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container active:scale-[0.99] text-left transition-all" data-category="Shoulders" data-name="Lateral Cable Raises" data-prev="12.0 kg × 15">
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm text-on-surface font-semibold">Lateral Cable Raises</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Lateral Delts • Cable</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">add_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Options Modal: Exercise More Menu -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end hidden opacity-0 transition-opacity duration-200" id="options-sheet">
+<div class="bg-surface rounded-t-xl p-space-md shadow-2xl flex flex-col gap-2 transform translate-y-full transition-transform duration-300 ease-out" id="options-sheet-content">
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto mb-1"></div>
+<h3 class="font-headline-sm text-base text-on-surface mb-2 font-bold" id="options-sheet-title">Exercise Options</h3>
+<button class="menu-action-btn w-full p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container flex items-center gap-3 text-left font-label-md" data-action="reorder">
+<span class="material-symbols-outlined text-on-surface-variant">swap_vert</span>
+<span>Reorder Exercise</span>
+</button>
+<button class="menu-action-btn w-full p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container flex items-center gap-3 text-left font-label-md" data-action="history">
+<span class="material-symbols-outlined text-accent-amber">history</span>
+<span>View Exercise History &amp; 1RM</span>
+</button>
+<button class="menu-action-btn w-full p-3 rounded-DEFAULT bg-surface-container-lowest hover:bg-surface-container flex items-center gap-3 text-left font-label-md text-error" data-action="remove">
+<span class="material-symbols-outlined text-error">delete</span>
+<span>Remove Exercise</span>
+</button>
+<button class="w-full mt-2 py-3 rounded-full bg-surface-container-high font-label-md text-on-surface text-center" id="close-options-sheet">Cancel</button>
+</div>
+</div>
+<!-- Back / Discard Confirmation Modal -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-gutter-mobile hidden opacity-0 transition-opacity duration-200" id="confirm-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-xs w-full p-5 shadow-2xl flex flex-col gap-3 transform scale-95 transition-transform duration-200" id="confirm-modal-content">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary mx-auto">
+<span class="material-symbols-outlined text-2xl">pause_circle</span>
+</div>
+<h3 class="font-headline-sm text-lg text-center text-on-surface font-bold" id="confirm-title">Workout In Progress</h3>
+<p class="font-body-sm text-sm text-center text-on-surface-variant" id="confirm-desc">Are you sure you want to pause or discard this workout? Your completed sets are auto-saved.</p>
+<div class="flex gap-2 mt-2">
+<button class="flex-1 py-2.5 rounded-full bg-surface-container text-on-surface font-label-md active:scale-95 transition-transform" id="confirm-cancel-btn">Resume</button>
+<button class="flex-1 py-2.5 rounded-full bg-primary-container text-on-primary-container font-label-md active:scale-95 transition-transform" id="confirm-ok-btn">Pause &amp; Exit</button>
+</div>
+</div>
+</div>
+<!-- Celebration Modal: Workout Completed Summary -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-gutter-mobile hidden opacity-0 transition-opacity duration-300" id="summary-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-sm w-full p-6 shadow-2xl flex flex-col gap-4 transform scale-95 transition-transform duration-300 text-center relative overflow-hidden" id="summary-modal-content">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mx-auto shadow-lg">
+<span class="material-symbols-outlined text-3xl font-bold" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div>
+<h3 class="font-headline-lg-mobile text-2xl font-extrabold text-on-surface">Workout Crushed!</h3>
+<p class="font-body-sm text-sm text-on-surface-variant mt-1">Upper Body Push A completed in <span class="font-semibold text-on-surface" id="summary-time">34:18</span></p>
+</div>
+<div class="grid grid-cols-3 gap-2 bg-surface-container p-3 rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-sm text-xs text-on-surface-variant uppercase">Total Volume</span>
+<span class="font-headline-sm text-sm font-bold text-on-surface" id="summary-volume">18,240 kg</span>
+</div>
+<div class="flex flex-col border-x border-surface-container-highest">
+<span class="font-label-sm text-xs text-on-surface-variant uppercase">Sets Hit</span>
+<span class="font-headline-sm text-sm font-bold text-on-surface" id="summary-sets">6 / 6</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-xs text-on-surface-variant uppercase">PR Hit</span>
+<span class="font-headline-sm text-sm font-bold text-accent-amber">+2.5 kg</span>
+</div>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant">Progressive overload registered on Bench Press. Great job pushing the envelope!</p>
+<button class="w-full py-3 rounded-full bg-primary-container text-on-primary-container font-label-lg active:scale-95 shadow-md transition-transform" id="summary-close-btn">
+Save &amp; View Analytics
+</button>
+</div>
+</div>
+<!-- Delight Confetti & Mini Toast Container -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-300 opacity-0 translate-y-2 z-50" id="toast-delight">
+<div class="bg-card-light-hero text-on-primary px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 text-sm font-label-md">
+<span class="material-symbols-outlined text-accent-mint text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span id="toast-text">Set Recorded! Progressive Overload Hit 🔥</span>
+</div>
+</div>
+</main>
+<script>
+  // Global state
+  let workoutSeconds = 34 * 60 + 18;
+  let isTimerPaused = false;
+  let restRemaining = 105;
+  const initialRestTotal = 120;
+  let restInterval = null;
+  let activeTargetCard = null;
+
+  // Helper: Show toast notification
+  function showToast(message, icon = 'verified', colorClass = 'text-accent-mint') {
+    const toast = document.getElementById('toast-delight');
+    const toastText = document.getElementById('toast-text');
+    if (!toast || !toastText) return;
+    toastText.textContent = message;
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    if (navigator.vibrate) {
+      navigator.vibrate([15, 30, 20]);
+    }
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-2');
+    }, 2000);
+  }
+
+  // Update total workout volume & finished set count
+  function updateVolumeSummary() {
+    let totalWeightKg = 0;
+    let totalSets = 0;
+    let completedSets = 0;
+
+    document.querySelectorAll('.set-row').forEach(row => {
+      totalSets++;
+      const isChecked = row.querySelector('.set-check-btn')?.getAttribute('data-checked') === 'true';
+      if (isChecked) completedSets++;
+
+      const weightVal = parseFloat(row.querySelector('.weight-input')?.value || 0);
+      const repsVal = parseFloat(row.querySelector('.reps-input')?.value || 0);
+      if (weightVal && repsVal) {
+        totalWeightKg += weightVal * repsVal;
+      }
+    });
+
+    const formattedVol = totalWeightKg.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    const finishLabel = document.getElementById('finish-label');
+    if (finishLabel) {
+      finishLabel.textContent = `Finish Workout (${formattedVol} kg)`;
+    }
+    const summaryVolume = document.getElementById('summary-volume');
+    if (summaryVolume) summaryVolume.textContent = `${formattedVol} kg`;
+    const summarySets = document.getElementById('summary-sets');
+    if (summarySets) summarySets.textContent = `${completedSets} / ${totalSets}`;
+  }
+
+  // Bind Set Checkmark Toggle
+  function bindSetRowListeners(row) {
+    const checkBtn = row.querySelector('.set-check-btn');
+    if (checkBtn && !checkBtn._bound) {
+      checkBtn._bound = true;
+      checkBtn.addEventListener('click', function() {
+        const isChecked = this.getAttribute('data-checked') === 'true';
+        if (!isChecked) {
+          this.setAttribute('data-checked', 'true');
+          this.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+          this.classList.add('bg-primary-container', 'text-on-primary-container', 'scale-110');
+          setTimeout(() => this.classList.remove('scale-110'), 180);
+          row.classList.remove('bg-surface-container');
+          row.classList.add('bg-surface-container-low/70');
+          showToast('Set Recorded! Progressive Overload Hit 🔥');
+          // Reset rest timer automatically upon set check
+          restRemaining = 90;
+          updateRestDisplay();
+        } else {
+          this.setAttribute('data-checked', 'false');
+          this.classList.remove('bg-primary-container', 'text-on-primary-container');
+          this.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+          row.classList.add('bg-surface-container');
+          row.classList.remove('bg-surface-container-low/70');
+          showToast('Set uncompleted', 'undo', 'text-accent-amber');
+        }
+        updateVolumeSummary();
+      });
+    }
+
+    // Input listeners for volume calculation
+    const inputs = row.querySelectorAll('.weight-input, .reps-input');
+    inputs.forEach(input => {
+      if (!input._bound) {
+        input._bound = true;
+        input.addEventListener('input', updateVolumeSummary);
+      }
+    });
+
+    // Steppers inside row
+    const steppers = row.querySelectorAll('.stepper-up, .stepper-down');
+    steppers.forEach(btn => {
+      if (!btn._bound) {
+        btn._bound = true;
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const targetId = this.getAttribute('data-target');
+          let input = targetId ? document.getElementById(targetId) : null;
+          if (!input) {
+            input = this.parentElement.querySelector('input');
+          }
+          if (input) {
+            let val = parseFloat(input.value) || 0;
+            const isUp = this.classList.contains('stepper-up');
+            const isReps = input.classList.contains('reps-input') || input.id.includes('r');
+            const step = isReps ? 1 : 2.5;
+            val = isUp ? (val + step) : Math.max(0, val - step);
+            input.value = isReps ? Math.round(val) : val.toFixed(1);
+            updateVolumeSummary();
+          }
+        });
+      }
+    });
+  }
+
+  // Initialize existing set rows
+  document.querySelectorAll('.set-row').forEach(bindSetRowListeners);
+
+  // Add Set Functionality
+  function appendNewSetRow(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const existingRows = container.querySelectorAll('.set-row');
+    const nextSetNumber = existingRows.length + 1;
+
+    // Get previous weight/rep values as starting default
+    const lastRow = existingRows[existingRows.length - 1];
+    let defaultWeight = '90.0';
+    let defaultReps = '8';
+    if (lastRow) {
+      const wInput = lastRow.querySelector('.weight-input');
+      const rInput = lastRow.querySelector('.reps-input');
+      if (wInput) defaultWeight = wInput.value;
+      if (rInput) defaultReps = rInput.value;
+    }
+
+    const rowId = 'set-' + Date.now();
+    const newRow = document.createElement('div');
+    newRow.className = 'set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container transition-all';
+    newRow.innerHTML = `
+      <div class="col-span-2 flex items-center gap-1">
+        <span class="set-number-badge w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center font-bold">${nextSetNumber}</span>
+      </div>
+      <span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">${defaultWeight}</span>
+      <div class="col-span-3">
+        <div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+          <button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+          <input class="weight-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface rounded-full py-0.5 outline-none tabular-nums" type="text" value="${defaultWeight}"/>
+          <button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+        </div>
+      </div>
+      <div class="col-span-2">
+        <div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+          <button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90">-</button>
+          <input class="reps-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface rounded-full py-0.5 outline-none tabular-nums" type="text" value="${defaultReps}"/>
+          <button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90">+</button>
+        </div>
+      </div>
+      <div class="col-span-1 text-center">
+        <span class="font-label-sm text-label-sm text-on-surface tabular-nums font-semibold">9.0</span>
+      </div>
+      <div class="col-span-2 flex justify-end pr-1">
+        <button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center transition-all" data-checked="false">
+          <span class="material-symbols-outlined text-[18px]">check</span>
+        </button>
+      </div>
+    `;
+
+    container.appendChild(newRow);
+    bindSetRowListeners(newRow);
+    showToast(`Set ${nextSetNumber} Added!`);
+    updateVolumeSummary();
+  }
+
+  // Hook up Add Set buttons
+  document.getElementById('add-set-bench-btn')?.addEventListener('click', () => {
+    appendNewSetRow('bench-rows-container');
+  });
+
+  document.getElementById('add-set-flyes-btn')?.addEventListener('click', () => {
+    appendNewSetRow('flyes-rows-container');
+  });
+
+  // Dynamic Add Set handlers for dynamically created cards
+  document.addEventListener('click', (e) => {
+    const addSetBtn = e.target.closest('.add-set-trigger');
+    if (addSetBtn && !addSetBtn.id.includes('bench') && !addSetBtn.id.includes('flyes')) {
+      const card = addSetBtn.closest('.exercise-card');
+      const setsContainer = card?.querySelector('.sets-container');
+      if (setsContainer) {
+        appendNewSetRow(setsContainer.id);
+      }
+    }
+  });
+
+  // Workout Session Timer
+  const sessionTimerEl = document.getElementById('session-timer');
+  const statusPulse = document.getElementById('status-pulse');
+  setInterval(() => {
+    if (!isTimerPaused) {
+      workoutSeconds++;
+      const mins = String(Math.floor(workoutSeconds / 60)).padStart(2, '0');
+      const secs = String(workoutSeconds % 60).padStart(2, '0');
+      if (sessionTimerEl) sessionTimerEl.textContent = `${mins}:${secs}`;
+    }
+  }, 1000);
+
+  // Rest Timer Controls
+  const restCounterEl = document.getElementById('rest-counter');
+  const restRing = document.getElementById('rest-ring');
+  const restStatusText = document.getElementById('rest-status-text');
+
+  function updateRestDisplay() {
+    const mins = String(Math.floor(restRemaining / 60)).padStart(2, '0');
+    const secs = String(restRemaining % 60).padStart(2, '0');
+    if (restCounterEl) restCounterEl.textContent = `${mins}:${secs}`;
+    if (restRing) {
+      const pct = Math.min(100, Math.max(0, (restRemaining / 120) * 100));
+      restRing.setAttribute('stroke-dasharray', `${pct.toFixed(0)}, 100`);
+    }
+    if (restStatusText) {
+      restStatusText.textContent = restRemaining === 0 ? 'Rest Complete' : 'remaining';
+    }
+  }
+
+  function startRestInterval() {
+    if (restInterval) clearInterval(restInterval);
+    restInterval = setInterval(() => {
+      if (restRemaining > 0 && !isTimerPaused) {
+        restRemaining--;
+        updateRestDisplay();
+        if (restRemaining === 0) {
+          showToast('Rest Finished! Ready for next set 💪', 'alarm_on');
+        }
+      }
+    }, 1000);
+  }
+  startRestInterval();
+
+  // Add 30 seconds to Rest
+  document.getElementById('add-rest-btn')?.addEventListener('click', () => {
+    restRemaining += 30;
+    updateRestDisplay();
+    showToast('+30s Added to Rest');
+  });
+
+  // Skip Rest
+  document.getElementById('skip-rest-btn')?.addEventListener('click', () => {
+    restRemaining = 0;
+    updateRestDisplay();
+    showToast('Rest Skipped', 'fast_forward');
+  });
+
+  // Exercise Selection Action Sheet
+  const exerciseSheet = document.getElementById('exercise-sheet');
+  const exerciseSheetContent = document.getElementById('exercise-sheet-content');
+  const addExerciseBtn = document.getElementById('add-exercise-btn');
+  const closeExerciseSheetBtn = document.getElementById('close-exercise-sheet');
+
+  function openExerciseSheet() {
+    exerciseSheet.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      exerciseSheet.classList.remove('opacity-0');
+      exerciseSheetContent.classList.remove('translate-y-full');
+    });
+  }
+
+  function closeExerciseSheet() {
+    exerciseSheet.classList.add('opacity-0');
+    exerciseSheetContent.classList.add('translate-y-full');
+    setTimeout(() => {
+      exerciseSheet.classList.add('hidden');
+    }, 200);
+  }
+
+  addExerciseBtn?.addEventListener('click', openExerciseSheet);
+  closeExerciseSheetBtn?.addEventListener('click', closeExerciseSheet);
+  exerciseSheet?.addEventListener('click', (e) => {
+    if (e.target === exerciseSheet) closeExerciseSheet();
+  });
+
+  // Handle selecting an exercise to append
+  document.querySelectorAll('.exercise-picker-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const name = this.getAttribute('data-name');
+      const category = this.getAttribute('data-category');
+      const prev = this.getAttribute('data-prev');
+      appendExerciseCard(name, category, prev);
+      closeExerciseSheet();
+      showToast(`Added ${name} to Workout!`, 'fitness_center');
+    });
+  });
+
+  function appendExerciseCard(name, category, prev) {
+    const wrapper = document.getElementById('exercises-wrapper');
+    if (!wrapper) return;
+    const cardId = 'ex-card-' + Date.now();
+    const rowsContainerId = 'rows-' + Date.now();
+
+    const newCard = document.createElement('section');
+    newCard.className = 'exercise-card px-gutter-mobile mb-space-md';
+    newCard.setAttribute('data-exercise', name);
+    newCard.id = cardId;
+    newCard.innerHTML = `
+      <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+        <div class="flex items-start justify-between">
+          <div class="flex flex-col gap-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">${name}</h2>
+              <span class="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full font-label-sm text-label-sm uppercase tracking-wider font-bold">${category}</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px] text-accent-amber">history</span>
+              <span>Last: <strong class="font-semibold text-on-surface">${prev}</strong></span>
+            </p>
+          </div>
+          <button aria-label="Exercise options" class="exercise-menu-btn w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[18px]">more_vert</span>
+          </button>
+        </div>
+        <div class="grid grid-cols-12 gap-1 px-1 py-1 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-center items-center">
+          <span class="col-span-2 text-left">Set</span>
+          <span class="col-span-2">Prev</span>
+          <span class="col-span-3">kg</span>
+          <span class="col-span-2">Reps</span>
+          <span class="col-span-1">RPE</span>
+          <span class="col-span-2 text-right pr-1">Done</span>
+        </div>
+        <div class="flex flex-col gap-1.5 sets-container" id="${rowsContainerId}">
+          <div class="set-row grid grid-cols-12 gap-1 items-center p-1.5 rounded-DEFAULT bg-surface-container transition-all">
+            <div class="col-span-2 flex items-center gap-1">
+              <span class="set-number-badge w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center font-bold">1</span>
+            </div>
+            <span class="col-span-2 text-center font-body-sm text-body-sm text-on-surface-variant tabular-nums">40.0</span>
+            <div class="col-span-3">
+              <div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+                <button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">-</button>
+                <input class="weight-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface outline-none tabular-nums" type="text" value="40.0"/>
+                <button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-sm font-bold active:scale-90">+</button>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="flex items-center justify-center bg-surface-container-lowest rounded-full px-1 py-0.5 shadow-sm">
+                <button class="stepper-down text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90">-</button>
+                <input class="reps-input w-full bg-transparent text-center font-headline-sm text-headline-sm text-on-surface outline-none tabular-nums" type="text" value="10"/>
+                <button class="stepper-up text-on-surface-variant hover:text-on-surface px-1 text-xs font-bold active:scale-90">+</button>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <span class="font-label-sm text-label-sm text-on-surface tabular-nums font-semibold">8.0</span>
+            </div>
+            <div class="col-span-2 flex justify-end pr-1">
+              <button aria-label="Mark set complete" class="set-check-btn active:scale-90 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center transition-all" data-checked="false">
+                <span class="material-symbols-outlined text-[18px]">check</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button class="add-set-trigger mt-space-xs w-full py-2.5 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-[0.99] font-label-md text-label-md text-on-surface flex items-center justify-center gap-1.5 transition-all">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Add Set</span>
+        </button>
+      </div>
+    `;
+
+    wrapper.appendChild(newCard);
+    const row = newCard.querySelector('.set-row');
+    if (row) bindSetRowListeners(row);
+    bindOptionsButtons();
+    updateVolumeSummary();
+    newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Exercise Options Sheet & Actions
+  const optionsSheet = document.getElementById('options-sheet');
+  const optionsSheetContent = document.getElementById('options-sheet-content');
+  const optionsSheetTitle = document.getElementById('options-sheet-title');
+  const closeOptionsSheetBtn = document.getElementById('close-options-sheet');
+
+  function openOptionsSheet(card) {
+    activeTargetCard = card;
+    const name = card.getAttribute('data-exercise') || 'Exercise';
+    if (optionsSheetTitle) optionsSheetTitle.textContent = `${name} Options`;
+    optionsSheet.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      optionsSheet.classList.remove('opacity-0');
+      optionsSheetContent.classList.remove('translate-y-full');
+    });
+  }
+
+  function closeOptionsSheet() {
+    optionsSheet.classList.add('opacity-0');
+    optionsSheetContent.classList.add('translate-y-full');
+    setTimeout(() => {
+      optionsSheet.classList.add('hidden');
+    }, 200);
+  }
+
+  closeOptionsSheetBtn?.addEventListener('click', closeOptionsSheet);
+  optionsSheet?.addEventListener('click', (e) => {
+    if (e.target === optionsSheet) closeOptionsSheet();
+  });
+
+  function bindOptionsButtons() {
+    document.querySelectorAll('.exercise-menu-btn').forEach(btn => {
+      if (!btn._bound) {
+        btn._bound = true;
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const card = this.closest('.exercise-card');
+          if (card) openOptionsSheet(card);
+        });
+      }
+    });
+  }
+  bindOptionsButtons();
+
+  document.querySelectorAll('.menu-action-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const action = this.getAttribute('data-action');
+      if (action === 'remove' && activeTargetCard) {
+        const name = activeTargetCard.getAttribute('data-exercise');
+        activeTargetCard.remove();
+        showToast(`Removed ${name}`, 'delete', 'text-error');
+        updateVolumeSummary();
+      } else if (action === 'history') {
+        showToast('Lifetime PR: 100 kg (1RM Estimated)', 'trending_up');
+      } else if (action === 'reorder') {
+        showToast('Drag & drop mode enabled', 'swap_vert');
+      }
+      closeOptionsSheet();
+    });
+  });
+
+  // Discard / Pause Modal Logic
+  const confirmModal = document.getElementById('confirm-modal');
+  const confirmModalContent = document.getElementById('confirm-modal-content');
+  const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+  const confirmOkBtn = document.getElementById('confirm-ok-btn');
+  const discardBtn = document.getElementById('discard-btn');
+  const pauseIcon = document.getElementById('pause-icon');
+  const navBackBtn = document.getElementById('nav-back-btn');
+
+  function openConfirmModal() {
+    confirmModal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      confirmModal.classList.remove('opacity-0');
+      confirmModalContent.classList.remove('scale-95');
+    });
+  }
+
+  function closeConfirmModal() {
+    confirmModal.classList.add('opacity-0');
+    confirmModalContent.classList.add('scale-95');
+    setTimeout(() => {
+      confirmModal.classList.add('hidden');
+    }, 200);
+  }
+
+  discardBtn?.addEventListener('click', () => {
+    isTimerPaused = !isTimerPaused;
+    if (pauseIcon) {
+      pauseIcon.textContent = isTimerPaused ? 'play_arrow' : 'pause';
+    }
+    if (statusPulse) {
+      if (isTimerPaused) {
+        statusPulse.classList.remove('bg-accent-mint', 'animate-pulse');
+        statusPulse.classList.add('bg-accent-amber');
+      } else {
+        statusPulse.classList.remove('bg-accent-amber');
+        statusPulse.classList.add('bg-accent-mint', 'animate-pulse');
+      }
+    }
+    showToast(isTimerPaused ? 'Workout Paused ⏸️' : 'Workout Resumed ▶️', isTimerPaused ? 'pause_circle' : 'play_circle');
+  });
+
+  navBackBtn?.addEventListener('click', openConfirmModal);
+  confirmCancelBtn?.addEventListener('click', closeConfirmModal);
+  confirmOkBtn?.addEventListener('click', () => {
+    closeConfirmModal();
+    showToast('Workout saved to drafts', 'save');
+    setTimeout(() => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        alert('Workout saved to session logs.');
+      }
+    }, 600);
+  });
+
+  // Finish Workout Modal
+  const finishBtn = document.getElementById('finish-workout-btn');
+  const summaryModal = document.getElementById('summary-modal');
+  const summaryModalContent = document.getElementById('summary-modal-content');
+  const summaryCloseBtn = document.getElementById('summary-close-btn');
+  const summaryTimeEl = document.getElementById('summary-time');
+
+  finishBtn?.addEventListener('click', () => {
+    updateVolumeSummary();
+    if (summaryTimeEl && sessionTimerEl) {
+      summaryTimeEl.textContent = sessionTimerEl.textContent;
+    }
+    summaryModal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      summaryModal.classList.remove('opacity-0');
+      summaryModalContent.classList.remove('scale-95');
+    });
+    if (navigator.vibrate) {
+      navigator.vibrate([40, 60, 40, 100]);
+    }
+  });
+
+  summaryCloseBtn?.addEventListener('click', () => {
+    summaryModal.classList.add('opacity-0');
+    summaryModalContent.classList.add('scale-95');
+    setTimeout(() => {
+      summaryModal.classList.add('hidden');
+      showToast('Workout successfully synced! 🎉');
+    }, 250);
+  });
+
+  // Initial Calculation Run
+  updateVolumeSummary();
+</script></body></html>

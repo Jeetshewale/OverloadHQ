@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100vh;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#dfd9d0", "primary-fixed-dim": "#ffb4a4", "on-primary-container": "#fffbff", "surface-tint": "#b82000", "on-surface": "#1d1b16", "card-light-hero": "#0B0B0B", "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#8d1600", "surface-container-highest": "#e7e2d8", "inverse-surface": "#32302a", "surface-container": "#f3ede3", "primary-fixed": "#ffdad3", "on-error": "#ffffff", "on-background": "#1d1b16", "secondary-fixed": "#e5e2e1", "secondary": "#5f5e5e", "tertiary-container": "#6f5fea", "primary": "#b41f00", "accent-amber": "#FF9500", "outline-variant": "#e7bdb4", "card-dark-hero": "#1C1C1E", "surface-variant": "#e7e2d8", "on-tertiary-fixed-variant": "#4029ba", "on-secondary-fixed-variant": "#474646", "error-container": "#ffdad6", "error": "#ba1a1a", "outline": "#926f67", "on-tertiary": "#ffffff", "on-error-container": "#93000a", "secondary-container": "#e5e2e1", "secondary-fixed-dim": "#c9c6c5", "tertiary-fixed": "#e4dfff", "on-primary-fixed": "#3e0500", "accent-mint": "#2ED8A3", "surface-dark": "#0A0A0A", "on-secondary-container": "#656464", "primary-container": "#e12900", "surface-container-low": "#f9f3e9", "on-tertiary-container": "#fffbff", "surface": "#fff9ef", "tertiary-fixed-dim": "#c6bfff", "tertiary": "#5644d0", "on-primary": "#ffffff", "on-tertiary-fixed": "#160066", "on-secondary-fixed": "#1c1b1b", "background": "#fff9ef", "inverse-primary": "#ffb4a4", "inverse-on-surface": "#f6f0e6", "on-surface-variant": "#5d3f39", "surface-bright": "#fff9ef", "surface-container-high": "#ede7de" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "3rem", "space-md": "1.25rem", "space-sm": "0.75rem", "space-lg": "2rem", "gutter": "1.5rem", "margin-tablet": "2rem", "space-xs": "0.375rem", "margin-mobile": "1.25rem", "gutter-mobile": "1rem", "space-xl": "3.5rem" }, fontFamily: { "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "display-hero-mobile": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "display-hero": ["Plus Jakarta Sans"] }, fontSize: { "headline-lg-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.015em", fontWeight: "700" }], "body-sm": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "-0.005em", fontWeight: "400" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }], "headline-md": ["24px", { lineHeight: "30px", letterSpacing: "-0.015em", fontWeight: "700" }], "headline-sm": ["20px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "600" }], "display-hero-mobile": ["40px", { lineHeight: "44px", letterSpacing: "-0.025em", fontWeight: "800" }], "label-lg": ["15px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-lg": ["36px", { lineHeight: "42px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-md": ["13px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" }], "body-md": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }], "display-hero": ["56px", { lineHeight: "60px", letterSpacing: "-0.03em", fontWeight: "800" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-40 pt-safe bg-surface/80 dark:bg-[#121214]/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile flex items-center justify-between"><div class="flex items-center gap-space-xs"><img alt="OverloadHQ Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VODF08t-g8B7E9-TCwzC1ZBCDkepxUDZgFq9mHIP4hsLbDoaC0i7JFW9z-7c64iy_FPAd7VkQrMJfTIrSncD5BHcA1UHBBxo6Z10sI-S8TzVtpw1llGMy--8RnQciP90IR44Jn7cfzkcZ4Oiiyb82tFF9T5QBX9vZiNk6QYv9R4ht6PxFQnP9-Oaz8vnNYP8i3cj97pA8uvlRlqQ4AU-rcIokIbfKBVf7Sa3Dp3PT7QQ"/><div class="flex flex-col ml-1"><span class="font-headline-sm text-headline-sm text-on-surface dark:text-surface-container-lowest tracking-tight leading-none">OverloadHQ</span><span class="font-label-sm text-label-sm text-on-surface-variant dark:text-secondary-fixed-dim font-bold uppercase tracking-wider scale-90 origin-left">Overview</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Toggle Dark/Light Mode" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface dark:text-surface-container-lowest hover:bg-surface-container dark:hover:bg-card-dark-hero transition-transform active:scale-90" id="theme-toggle-btn" onclick="toggleTheme()" type="button"><span class="material-symbols-outlined text-[20px]" id="theme-icon-indicator">dark_mode</span></button><button aria-label="Quick Add Workout" class="w-11 h-11 rounded-full flex items-center justify-center bg-primary text-on-primary shadow-sm hover:opacity-95 transition-transform active:scale-90" onclick="openQuickAddModal()" type="button"><span class="material-symbols-outlined text-[22px]">add</span></button><button aria-label="View Profile" class="w-11 h-11 flex items-center justify-center rounded-full transition-transform active:scale-95" onclick="showToast('Alex Rivera — Pro Athlete Tier Active')"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFV9Kx3OqofRuWx15vg4jiatrfWSDH-ZjEQYE0Vf-UHHszfbDsusYMSs9wGWc4OdKwQRlPCMra-FjPrMe3b7NLAvOejVxG-YO1a4CT9TFTEwcozRyQuZQcQxobA7YosSLxaefOkVaQkQ61PnplJAh-PXdRgV13g-o46KqSJ9gQ4TmUrHTImsLVq6O2HNThbX7ezfwcOig4TyL-U_9SOTUXUXYNcOwe9l89aUYa1ap1"/></button></div></div></header><main class="flex flex-col relative w-full pt-16 pb-28 bg-surface dark:bg-[#121214] min-h-screen transition-colors duration-200"><div class="flex flex-col w-full px-gutter-mobile gap-space-md max-w-md mx-auto">
+<!-- Greeting Header Section -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col min-w-0 pr-space-xs">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface dark:text-surface-container-lowest tracking-tight">Hey, Alex!</h1>
+<p class="font-body-md text-body-md text-secondary dark:text-secondary-fixed-dim mt-0.5">Ready to push your limits today?</p>
+</div>
+<button aria-label="Quick Add Workout" class="relative group flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-lowest dark:bg-card-dark-hero text-primary shadow-sm hover:bg-primary hover:text-on-primary transition-all duration-200 active:scale-90 flex-shrink-0 border border-transparent dark:border-white/10" onclick="openQuickAddModal()" type="button">
+<span class="material-symbols-outlined text-[26px]">add</span>
+</button>
+</div>
+<!-- Editorial Dark Hero Card -->
+<section class="relative overflow-hidden bg-card-light-hero dark:bg-card-dark-hero rounded-[26px] p-space-md text-on-primary-container shadow-md border border-white/5">
+<!-- Subtle Ambient Glow -->
+<div class="absolute -top-12 -right-12 w-44 h-44 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-md">
+<!-- Conversational Headline -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-fixed opacity-75 font-semibold">Weekly Milestone</span>
+<h2 class="font-headline-sm text-headline-sm text-surface-container-lowest leading-snug">
+          You lifted <span class="text-primary-fixed-dim underline decoration-primary/40 underline-offset-4 cursor-pointer hover:text-white transition-colors" onclick="showToast('Weekly Volume Goal: 91% Completed')">18,240 kg</span> across 4 workouts this week.
+        </h2>
+</div>
+<!-- Metric Highlights -->
+<div class="flex flex-col gap-space-xs pt-1">
+<!-- Metric 1: Workouts -->
+<div class="flex items-center justify-between bg-surface-dark/40 hover:bg-surface-dark/60 cursor-pointer transition-all active:scale-[0.98] p-2.5 rounded-[14px]" onclick="showToast('Workouts: 4 completed, 1 scheduled for Saturday')">
+<div class="flex items-center gap-space-xs">
+<span class="flex items-center justify-center w-7 h-7 rounded-[10px] bg-tertiary/20 text-tertiary-fixed font-bold">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+</span>
+<span class="font-label-md text-label-md text-surface-container-highest">Total Workouts</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md font-bold text-surface-container-lowest">4 sessions</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed ml-1 font-semibold">(+1 vs last wk)</span>
+</div>
+</div>
+<!-- Metric 2: Volume -->
+<div class="flex items-center justify-between bg-surface-dark/40 hover:bg-surface-dark/60 cursor-pointer transition-all active:scale-[0.98] p-2.5 rounded-[14px]" onclick="showToast('Volume Record: +1,420 kg increase over previous peak')">
+<div class="flex items-center gap-space-xs">
+<span class="flex items-center justify-center w-7 h-7 rounded-[10px] bg-accent-mint/20 text-accent-mint font-bold">
+<span class="material-symbols-outlined text-[16px]">fitness_center</span>
+</span>
+<span class="font-label-md text-label-md text-surface-container-highest">Weekly Volume</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md font-bold text-surface-container-lowest">18,240 kg</span>
+<span class="font-label-sm text-label-sm text-accent-mint ml-1 font-semibold">(Record)</span>
+</div>
+</div>
+<!-- Metric 3: PRs -->
+<div class="flex items-center justify-between bg-surface-dark/40 hover:bg-surface-dark/60 cursor-pointer transition-all active:scale-[0.98] p-2.5 rounded-[14px]" onclick="showToast('3 PRs achieved: Incline Press, Squat, Weighted Dips')">
+<div class="flex items-center gap-space-xs">
+<span class="flex items-center justify-center w-7 h-7 rounded-[10px] bg-accent-amber/20 text-accent-amber font-bold">
+<span class="material-symbols-outlined text-[16px]">military_tech</span>
+</span>
+<span class="font-label-md text-label-md text-surface-container-highest">Personal Records</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md font-bold text-accent-amber">3 PRs broken</span>
+</div>
+</div>
+</div>
+<!-- Action Footer with vermillion circular button -->
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-secondary-fixed/80">Keep up the progressive overload pace</span>
+<button aria-label="View weekly breakdown" class="flex items-center justify-center w-11 h-11 rounded-full bg-primary-container text-on-primary shadow-sm hover:scale-105 active:scale-95 transition-transform duration-150 cursor-pointer" onclick="openBreakdownModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Playful Equivalence Card -->
+<section class="bg-surface-container-lowest dark:bg-card-dark-hero rounded-[24px] p-space-md shadow-sm flex flex-col gap-space-sm border border-transparent dark:border-white/5 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">psychology_alt</span>
+<span class="font-label-md text-label-md text-on-surface dark:text-surface-container-lowest font-bold tracking-tight">That's roughly the equivalent of:</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim">18.2 metric tons</span>
+</div>
+<!-- 3 visual comparisons -->
+<div class="grid grid-cols-3 gap-2 pt-1">
+<button class="flex flex-col items-center justify-center text-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5 transition-all hover:-translate-y-0.5 active:scale-95 cursor-pointer border border-transparent focus:outline-none" onclick="showToast('13 standard sedans (~1,400 kg each)')" type="button">
+<span aria-label="Car" class="text-2xl mb-1.5 select-none" role="img">🚗</span>
+<span class="font-label-md text-label-md font-bold text-on-surface dark:text-surface-container-lowest leading-tight">13 Cars</span>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim text-[10px] mt-0.5 leading-tight">Family sedans</span>
+</button>
+<button class="flex flex-col items-center justify-center text-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5 transition-all hover:-translate-y-0.5 active:scale-95 cursor-pointer border border-transparent focus:outline-none" onclick="showToast('3 adult African bush elephants (~6,000 kg each)')" type="button">
+<span aria-label="Elephant" class="text-2xl mb-1.5 select-none" role="img">🐘</span>
+<span class="font-label-md text-label-md font-bold text-on-surface dark:text-surface-container-lowest leading-tight">3 Adults</span>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim text-[10px] mt-0.5 leading-tight">African elephants</span>
+</button>
+<button class="flex flex-col items-center justify-center text-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5 transition-all hover:-translate-y-0.5 active:scale-95 cursor-pointer border border-transparent focus:outline-none" onclick="showToast('180 bags of commercial cement (~100 kg each)')" type="button">
+<span aria-label="Cement" class="text-2xl mb-1.5 select-none" role="img">🏋️</span>
+<span class="font-label-md text-label-md font-bold text-on-surface dark:text-surface-container-lowest leading-tight">180 Bags</span>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim text-[10px] mt-0.5 leading-tight">Olympic cement</span>
+</button>
+</div>
+<div class="flex items-center justify-between text-secondary dark:text-secondary-fixed-dim pt-0.5">
+<p class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim text-[11px]">Approximate, for illustration only.</p>
+<button aria-label="Equivalence Info" class="hover:text-primary transition-colors cursor-pointer" onclick="showToast('Calculated using sum of all load volume: weight x reps x sets')" type="button"><span class="material-symbols-outlined text-[14px]">info</span></button>
+</div>
+</section>
+<!-- Today's Plan / Next Workout Card -->
+<section class="bg-surface-container-lowest dark:bg-card-dark-hero rounded-[24px] p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden border border-transparent dark:border-white/5 transition-colors">
+<!-- Top badge row -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm font-bold tracking-wider">
+          TODAY
+        </span>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim font-medium">Next Session</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[16px]">schedule</span> 5:30 PM
+      </span>
+</div>
+<!-- Workout Meta -->
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface dark:text-surface-container-lowest font-bold leading-tight">
+        Upper Body Push (Hypertrophy)
+      </h3>
+<p class="font-body-sm text-body-sm text-secondary dark:text-secondary-fixed-dim mt-1">
+        6 movements • Focus on chest tension &amp; tricep overload
+      </p>
+</div>
+<!-- Timing & Exercises Chips -->
+<div class="flex items-center gap-2 py-0.5">
+<button class="flex items-center gap-1 bg-surface-container dark:bg-white/10 px-3 py-1 rounded-full text-on-surface dark:text-surface-container-lowest active:scale-95 transition-transform" onclick="showToast('Target Duration: 45–55 min with rest pauses')" type="button">
+<span class="material-symbols-outlined text-[15px] text-primary">timer</span>
+<span class="font-label-sm text-label-sm">45–55 min</span>
+</button>
+<button class="flex items-center gap-1 bg-surface-container dark:bg-white/10 px-3 py-1 rounded-full text-on-surface dark:text-surface-container-lowest active:scale-95 transition-transform" onclick="showToast('Target Intensity: Rate of Perceived Exertion 8.0')" type="button">
+<span class="material-symbols-outlined text-[15px] text-tertiary">tune</span>
+<span class="font-label-sm text-label-sm">RPE 8.0 target</span>
+</button>
+</div>
+<!-- Action Pill Button -->
+<button class="w-full h-12 mt-1 rounded-full bg-primary text-on-primary flex items-center justify-center gap-2 font-label-lg text-label-lg shadow-sm hover:opacity-95 active:scale-98 transition-all cursor-pointer" id="start-workout-btn" onclick="startWorkoutSession()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="start-btn-icon">play_arrow</span>
+<span id="start-btn-label">Start Workout</span>
+</button>
+</section>
+<!-- Recent PRs Soft List Section -->
+<section class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-accent-amber text-[20px]">workspace_premium</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface dark:text-surface-container-lowest font-bold">Recent PRs</h3>
+</div>
+<button class="font-label-sm text-label-sm text-primary font-bold hover:underline cursor-pointer bg-transparent border-0" onclick="showToast('All 16 Personal Records loaded in Progress tab')" type="button">View All</button>
+</div>
+<div class="flex flex-col gap-2">
+<!-- PR Item 1 -->
+<div class="bg-surface-container-lowest dark:bg-card-dark-hero rounded-[20px] p-3.5 flex items-center justify-between shadow-sm cursor-pointer transition-all hover:bg-surface-container-low dark:hover:bg-white/5 active:scale-[0.98] border border-transparent dark:border-white/5" onclick="showPRDetail('Incline Dumbbell Press', '36 kg × 8 reps', '+2.5 kg', 'Chest &amp; Front Delts')">
+<div class="flex items-center gap-space-xs min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container dark:bg-white/10 flex items-center justify-center flex-shrink-0 text-on-surface dark:text-surface-container-lowest">
+<span class="material-symbols-outlined text-[18px]">exercise</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface dark:text-surface-container-lowest font-bold truncate">Incline Dumbbell Press</span>
+<span class="font-body-sm text-body-sm text-secondary dark:text-secondary-fixed-dim text-[12px]">36 kg × 8 reps</span>
+</div>
+</div>
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full bg-accent-mint/15 text-accent-mint font-label-sm text-label-sm font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +2.5 kg
+          </span>
+</div>
+</div>
+<!-- PR Item 2 -->
+<div class="bg-surface-container-lowest dark:bg-card-dark-hero rounded-[20px] p-3.5 flex items-center justify-between shadow-sm cursor-pointer transition-all hover:bg-surface-container-low dark:hover:bg-white/5 active:scale-[0.98] border border-transparent dark:border-white/5" onclick="showPRDetail('Barbell Back Squat', '140 kg × 5 reps', '+5.0 kg', 'Quadriceps &amp; Glutes')">
+<div class="flex items-center gap-space-xs min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container dark:bg-white/10 flex items-center justify-center flex-shrink-0 text-on-surface dark:text-surface-container-lowest">
+<span class="material-symbols-outlined text-[18px]">fitness_center</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface dark:text-surface-container-lowest font-bold truncate">Barbell Back Squat</span>
+<span class="font-body-sm text-body-sm text-secondary dark:text-secondary-fixed-dim text-[12px]">140 kg × 5 reps</span>
+</div>
+</div>
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full bg-accent-mint/15 text-accent-mint font-label-sm text-label-sm font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +5.0 kg
+          </span>
+</div>
+</div>
+<!-- PR Item 3 -->
+<div class="bg-surface-container-lowest dark:bg-card-dark-hero rounded-[20px] p-3.5 flex items-center justify-between shadow-sm cursor-pointer transition-all hover:bg-surface-container-low dark:hover:bg-white/5 active:scale-[0.98] border border-transparent dark:border-white/5" onclick="showPRDetail('Weighted Dips', '+30 kg × 10 reps', '+2.5 kg', 'Triceps &amp; Lower Chest')">
+<div class="flex items-center gap-space-xs min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container dark:bg-white/10 flex items-center justify-center flex-shrink-0 text-on-surface dark:text-surface-container-lowest">
+<span class="material-symbols-outlined text-[18px]">sports_gymnastics</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface dark:text-surface-container-lowest font-bold truncate">Weighted Dips</span>
+<span class="font-body-sm text-body-sm text-secondary dark:text-secondary-fixed-dim text-[12px]">+30 kg × 10 reps</span>
+</div>
+</div>
+<div class="flex items-center gap-1 flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full bg-accent-mint/15 text-accent-mint font-label-sm text-label-sm font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +2.5 kg
+          </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Motivational Editorial Anchor -->
+<div class="p-space-sm rounded-[18px] bg-surface-container-low dark:bg-white/5 flex items-center gap-space-xs mt-1 cursor-pointer transition-transform active:scale-[0.99]" onclick="showToast('Streak active: Day 14! Optimal strain window opens now.')">
+<span class="material-symbols-outlined text-primary text-[20px]">bolt</span>
+<p class="font-body-sm text-body-sm text-secondary dark:text-secondary-fixed-dim text-[13px] leading-snug">
+      Consecutive consistency streak: <span class="font-bold text-on-surface dark:text-surface-container-lowest">14 days</span>. Recovery status is optimal for high strain today.
+    </p>
+</div>
+</div></main>
+<!-- Interactive Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-40 pb-safe pointer-events-none" data-active-classes="text-primary font-bold"><div class="px-gutter-mobile pb-3 pt-1 flex justify-center"><div class="pointer-events-auto h-16 w-full max-w-md bg-surface-container-lowest/90 dark:bg-card-light-hero/90 backdrop-blur-xl rounded-full px-2 flex items-center justify-around shadow-[0_4px_24px_rgba(0,0,0,0.12)] border border-black/5 dark:border-white/10" id="nav-container"><button aria-current="page" class="nav-tab flex flex-col items-center justify-center w-14 h-12 rounded-full transition-all duration-150 active:scale-90 text-primary font-bold cursor-pointer" data-path="overview" onclick="switchNavTab(this, 'Overview')" type="button"><span class="material-symbols-outlined text-[22px]">space_dashboard</span><span class="font-label-sm text-label-sm leading-tight mt-0.5">Overview</span></button><button class="nav-tab flex flex-col items-center justify-center w-14 h-12 rounded-full text-on-surface-variant dark:text-secondary-fixed-dim hover:text-on-surface transition-all duration-150 active:scale-90 cursor-pointer" data-path="workouts" onclick="switchNavTab(this, 'Workouts')" type="button"><span class="material-symbols-outlined text-[22px]">fitness_center</span><span class="font-label-sm text-label-sm leading-tight mt-0.5">Workouts</span></button><button class="nav-tab flex flex-col items-center justify-center w-14 h-12 rounded-full text-on-surface-variant dark:text-secondary-fixed-dim hover:text-on-surface transition-all duration-150 active:scale-90 cursor-pointer" data-path="progress" onclick="switchNavTab(this, 'Progress')" type="button"><span class="material-symbols-outlined text-[22px]">monitoring</span><span class="font-label-sm text-label-sm leading-tight mt-0.5">Progress</span></button><button class="nav-tab flex flex-col items-center justify-center w-14 h-12 rounded-full text-on-surface-variant dark:text-secondary-fixed-dim hover:text-on-surface transition-all duration-150 active:scale-90 cursor-pointer" data-path="ai-coach" onclick="switchNavTab(this, 'AI Coach')" type="button"><span class="material-symbols-outlined text-[22px]">neurology</span><span class="font-label-sm text-label-sm leading-tight mt-0.5">AI Coach</span></button><button class="nav-tab flex flex-col items-center justify-center w-14 h-12 rounded-full text-on-surface-variant dark:text-secondary-fixed-dim hover:text-on-surface transition-all duration-150 active:scale-90 cursor-pointer" data-path="settings" onclick="switchNavTab(this, 'Settings')" type="button"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm leading-tight mt-0.5">Settings</span></button></div></div></nav>
+<!-- Interactive Quick Add Modal / Action Sheet -->
+<div aria-hidden="true" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity opacity-0" id="quick-add-modal" onclick="if(event.target===this)closeQuickAddModal()">
+<div class="w-full max-w-md bg-surface-container-lowest dark:bg-[#1A1A1D] rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl transform translate-y-full sm:translate-y-4 transition-transform duration-300 flex flex-col gap-4 text-on-surface dark:text-surface-container-lowest" id="quick-add-sheet">
+<div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">add_circle</span>
+<h3 class="font-headline-sm text-headline-sm font-bold">Quick Log</h3>
+</div>
+<button aria-label="Close" class="w-8 h-8 rounded-full bg-surface-container dark:bg-white/10 flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer" onclick="closeQuickAddModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-1">
+<button class="flex flex-col items-start p-3.5 rounded-2xl bg-surface-container-low dark:bg-white/5 hover:bg-surface-container dark:hover:bg-white/10 active:scale-95 transition-all text-left" onclick="handleQuickAction('Upper Body Routine')" type="button">
+<span class="material-symbols-outlined text-primary text-[22px] mb-2">fitness_center</span>
+<span class="font-label-md font-bold">Log Upper Body</span>
+<span class="font-label-sm text-secondary dark:text-secondary-fixed-dim text-[11px]">Chest, Back, Arms</span>
+</button>
+<button class="flex flex-col items-start p-3.5 rounded-2xl bg-surface-container-low dark:bg-white/5 hover:bg-surface-container dark:hover:bg-white/10 active:scale-95 transition-all text-left" onclick="handleQuickAction('Lower Body Routine')" type="button">
+<span class="material-symbols-outlined text-tertiary text-[22px] mb-2">directions_run</span>
+<span class="font-label-md font-bold">Log Lower Body</span>
+<span class="font-label-sm text-secondary dark:text-secondary-fixed-dim text-[11px]">Squats, Deadlifts</span>
+</button>
+<button class="flex flex-col items-start p-3.5 rounded-2xl bg-surface-container-low dark:bg-white/5 hover:bg-surface-container dark:hover:bg-white/10 active:scale-95 transition-all text-left" onclick="handleQuickAction('Custom Set')" type="button">
+<span class="material-symbols-outlined text-accent-amber text-[22px] mb-2">edit_note</span>
+<span class="font-label-md font-bold">Single PR Set</span>
+<span class="font-label-sm text-secondary dark:text-secondary-fixed-dim text-[11px]">Record new 1RM</span>
+</button>
+<button class="flex flex-col items-start p-3.5 rounded-2xl bg-surface-container-low dark:bg-white/5 hover:bg-surface-container dark:hover:bg-white/10 active:scale-95 transition-all text-left" onclick="handleQuickAction('Import Template')" type="button">
+<span class="material-symbols-outlined text-accent-mint text-[22px] mb-2">download</span>
+<span class="font-label-md font-bold">Import Plan</span>
+<span class="font-label-sm text-secondary dark:text-secondary-fixed-dim text-[11px]">AI Coach generated</span>
+</button>
+</div>
+<button class="w-full h-11 mt-1 rounded-full bg-surface-container dark:bg-white/10 text-on-surface dark:text-surface-container-lowest font-label-md font-bold hover:bg-surface-container-high transition-colors" onclick="closeQuickAddModal()" type="button">Cancel</button>
+</div>
+</div>
+<!-- Interactive Weekly Breakdown Modal -->
+<div aria-hidden="true" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity opacity-0" id="breakdown-modal" onclick="if(event.target===this)closeBreakdownModal()">
+<div class="w-full max-w-md bg-surface-container-lowest dark:bg-[#1A1A1D] rounded-t-[28px] sm:rounded-[28px] p-6 shadow-2xl transform translate-y-full sm:translate-y-4 transition-transform duration-300 flex flex-col gap-4 text-on-surface dark:text-surface-container-lowest" id="breakdown-sheet">
+<div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">insights</span>
+<h3 class="font-headline-sm text-headline-sm font-bold">Weekly Breakdown</h3>
+</div>
+<button aria-label="Close" class="w-8 h-8 rounded-full bg-surface-container dark:bg-white/10 flex items-center justify-center text-secondary hover:text-on-surface cursor-pointer" onclick="closeBreakdownModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-2.5">
+<div class="flex justify-between items-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5">
+<span class="font-label-md">Monday • Heavy Push</span>
+<span class="font-label-md font-bold text-primary">5,420 kg</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5">
+<span class="font-label-md">Tuesday • Pull + Core</span>
+<span class="font-label-md font-bold text-primary">4,190 kg</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5">
+<span class="font-label-md">Thursday • Legs Overload</span>
+<span class="font-label-md font-bold text-primary">5,980 kg</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-2xl bg-surface-container-low dark:bg-white/5">
+<span class="font-label-md">Friday • Arms &amp; Shoulders</span>
+<span class="font-label-md font-bold text-primary">2,650 kg</span>
+</div>
+</div>
+<button class="w-full h-12 mt-1 rounded-full bg-primary text-on-primary font-label-lg font-bold shadow-sm active:scale-98 transition-transform" onclick="closeBreakdownModal(); showToast('Exported Weekly Report to Overload Sync')" type="button">
+      Download Report
+    </button>
+</div>
+</div>
+<!-- Dynamic Feedback Toast Notification -->
+<div aria-live="polite" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none transform -translate-y-8 opacity-0 transition-all duration-300 w-auto max-w-[90vw]" id="feedback-toast">
+<div class="bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 border border-white/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-[18px] text-accent-mint" id="toast-icon">check_circle</span>
+<span class="font-label-md text-label-md whitespace-nowrap" id="toast-text">Notification</span>
+</div>
+</div>
+<script>
+  let toastTimer = null;
+  function showToast(message, icon = 'check_circle') {
+    const toast = document.getElementById('feedback-toast');
+    const toastLabel = document.getElementById('toast-text');
+    const toastIcon = document.getElementById('toast-icon');
+    if (!toast || !toastLabel) return;
+    
+    toastLabel.textContent = message;
+    if (toastIcon) toastIcon.textContent = icon;
+    
+    toast.classList.remove('opacity-0', '-translate-y-8', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', '-translate-y-8', 'pointer-events-none');
+    }, 2400);
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    if (isDark) {
+      document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    }
+    const icon = document.getElementById('theme-icon-indicator');
+    if (icon) {
+      icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    }
+    showToast(isDark ? 'Dark theme enabled' : 'Light theme enabled', isDark ? 'dark_mode' : 'light_mode');
+  }
+
+  let workoutActive = false;
+  function startWorkoutSession() {
+    const btn = document.getElementById('start-workout-btn');
+    const icon = document.getElementById('start-btn-icon');
+    const label = document.getElementById('start-btn-label');
+    
+    workoutActive = !workoutActive;
+    if (workoutActive) {
+      if (btn) {
+        btn.classList.remove('bg-primary');
+        btn.classList.add('bg-accent-mint', 'text-surface-dark');
+      }
+      if (icon) icon.textContent = 'pause';
+      if (label) label.textContent = 'Workout In Progress (Live)';
+      showToast('Workout Started! Timer is running (Upper Body Push)', 'play_circle');
+    } else {
+      if (btn) {
+        btn.classList.remove('bg-accent-mint', 'text-surface-dark');
+        btn.classList.add('bg-primary');
+      }
+      if (icon) icon.textContent = 'play_arrow';
+      if (label) label.textContent = 'Resume Workout';
+      showToast('Workout paused & progress auto-saved', 'pause_circle');
+    }
+  }
+
+  function openQuickAddModal() {
+    const modal = document.getElementById('quick-add-modal');
+    const sheet = document.getElementById('quick-add-sheet');
+    if (!modal || !sheet) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      modal.classList.add('opacity-100');
+      sheet.classList.remove('translate-y-full', 'sm:translate-y-4');
+      sheet.classList.add('translate-y-0');
+    }, 10);
+  }
+
+  function closeQuickAddModal() {
+    const modal = document.getElementById('quick-add-modal');
+    const sheet = document.getElementById('quick-add-sheet');
+    if (!modal || !sheet) return;
+    modal.classList.remove('opacity-100');
+    modal.classList.add('opacity-0');
+    sheet.classList.remove('translate-y-0');
+    sheet.classList.add('translate-y-full', 'sm:translate-y-4');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 280);
+  }
+
+  function handleQuickAction(actionName) {
+    closeQuickAddModal();
+    showToast(`Quick Action: ${actionName} logged!`, 'add_task');
+  }
+
+  function openBreakdownModal() {
+    const modal = document.getElementById('breakdown-modal');
+    const sheet = document.getElementById('breakdown-sheet');
+    if (!modal || !sheet) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      modal.classList.add('opacity-100');
+      sheet.classList.remove('translate-y-full', 'sm:translate-y-4');
+      sheet.classList.add('translate-y-0');
+    }, 10);
+  }
+
+  function closeBreakdownModal() {
+    const modal = document.getElementById('breakdown-modal');
+    const sheet = document.getElementById('breakdown-sheet');
+    if (!modal || !sheet) return;
+    modal.classList.remove('opacity-100');
+    modal.classList.add('opacity-0');
+    sheet.classList.remove('translate-y-0');
+    sheet.classList.add('translate-y-full', 'sm:translate-y-4');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 280);
+  }
+
+  function switchNavTab(btnElement, tabName) {
+    const tabs = document.querySelectorAll('.nav-tab');
+    tabs.forEach(tab => {
+      tab.removeAttribute('aria-current');
+      tab.classList.remove('text-primary', 'font-bold');
+      tab.classList.add('text-on-surface-variant', 'dark:text-secondary-fixed-dim');
+    });
+    
+    btnElement.setAttribute('aria-current', 'page');
+    btnElement.classList.remove('text-on-surface-variant', 'dark:text-secondary-fixed-dim');
+    btnElement.classList.add('text-primary', 'font-bold');
+    
+    showToast(`Navigated to ${tabName}`, 'tab');
+  }
+
+  function showPRDetail(title, stats, increase, muscleGroup) {
+    showToast(`${title}: ${stats} (${increase}) • ${muscleGroup}`, 'military_tech');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+    const icon = document.getElementById('theme-icon-indicator');
+    if (icon) {
+      icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    }
+  });
+</script>
+</body></html>
