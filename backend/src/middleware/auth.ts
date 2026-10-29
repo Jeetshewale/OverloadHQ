@@ -23,7 +23,9 @@ declare global {
 }
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const token = req.cookies?.[config.jwt.cookieName];
+  const headerToken = req.headers.authorization?.replace(/^Bearer\s+/i, "").trim();
+  const cookieToken = req.cookies?.[config.jwt.cookieName];
+  const token = headerToken || cookieToken;
 
   if (!token) {
     res.status(401).json({ error: "Authentication required" });

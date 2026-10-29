@@ -7,10 +7,10 @@ export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "OverloadHQ";
 export const API_BASE = "/api/v1";
 
 export const MUSCLE_GROUPS = [
-  "BACK",
   "CHEST",
-  "SHOULDERS",
+  "BACK",
   "LEGS",
+  "SHOULDERS",
   "BICEPS",
   "TRICEPS",
   "ARMS",
@@ -21,10 +21,10 @@ export const MUSCLE_GROUPS = [
 ] as const;
 
 export const MUSCLE_GROUP_LABELS: Record<string, string> = {
-  BACK: "Back",
   CHEST: "Chest",
-  SHOULDERS: "Shoulders",
+  BACK: "Back",
   LEGS: "Legs",
+  SHOULDERS: "Shoulders",
   BICEPS: "Biceps",
   TRICEPS: "Triceps",
   ARMS: "Arms",
@@ -35,17 +35,56 @@ export const MUSCLE_GROUP_LABELS: Record<string, string> = {
 };
 
 export const MUSCLE_GROUP_EMOJIS: Record<string, string> = {
-  BACK: "🔙",
   CHEST: "💪",
-  SHOULDERS: "🤷",
+  BACK: "🔙",
   LEGS: "🦵",
-  BICEPS: "💪",
-  TRICEPS: "💪",
+  SHOULDERS: "🤷",
+  BICEPS: "🦾",
+  TRICEPS: "💥",
   ARMS: "💪",
   CORE: "🎯",
   FULL_BODY: "🏋️",
   CARDIO: "🏃",
   OTHER: "⚡",
+};
+
+// Popular multi-select muscle presets for fast 1-click selection
+export const MUSCLE_PRESETS = [
+  { label: "Chest & Triceps", groups: ["CHEST", "TRICEPS"] },
+  { label: "Back & Biceps", groups: ["BACK", "BICEPS"] },
+  { label: "Push (Chest/Sh/Tri)", groups: ["CHEST", "SHOULDERS", "TRICEPS"] },
+  { label: "Pull (Back/Bi)", groups: ["BACK", "BICEPS"] },
+  { label: "Legs & Core", groups: ["LEGS", "CORE"] },
+  { label: "Shoulders & Arms", groups: ["SHOULDERS", "ARMS"] },
+  { label: "Upper Body", groups: ["CHEST", "BACK", "SHOULDERS", "ARMS"] },
+  { label: "Full Body", groups: ["FULL_BODY"] },
+];
+
+export const WORKOUT_SPLITS = [
+  "4_DAY_SPLIT",
+  "PPL",
+  "UPPER_LOWER",
+  "FULL_BODY",
+  "BRO_SPLIT",
+  "OTHER",
+] as const;
+
+export const WORKOUT_SPLIT_LABELS: Record<string, string> = {
+  "4_DAY_SPLIT": "4-Day Split",
+  PPL: "Push / Pull / Legs (PPL)",
+  UPPER_LOWER: "Upper / Lower",
+  FULL_BODY: "Full Body",
+  BRO_SPLIT: "Bro Split (5-Day)",
+  OTHER: "Other / Custom",
+};
+
+export const WORKOUT_SPLIT_DESCRIPTIONS: Record<string, string> = {
+  "4_DAY_SPLIT": "Progressive overload tracked after 2 workout days of each muscle group.",
+  PPL: "Push (Chest/Shoulders/Triceps), Pull (Back/Biceps), Legs (Quads/Hamstrings/Calves).",
+  UPPER_LOWER: "Alternating Upper Body and Lower Body strength & hypertrophy sessions.",
+  FULL_BODY: "Whole body stimulation 3 days per week with balanced recovery.",
+  BRO_SPLIT: "Dedicated single muscle group specialization each day (Chest, Back, Arms, Shoulders, Legs).",
+  OTHER: "Custom split tailored to your schedule.",
 };
 
 export const GOAL_LABELS: Record<string, string> = {

@@ -27,7 +27,10 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: config.frontendUrl,
+    origin: (origin, callback) => {
+      // Allow all origins (localhost, vercel deployments, mobile, proxies) with credentials
+      callback(null, true);
+    },
     credentials: true,
   })
 );

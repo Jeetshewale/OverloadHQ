@@ -1,6 +1,7 @@
 "use client";
 // ---------------------------------------------------------------
 // OverloadHQ – Auth Context
+// Resilient authentication with dual Cookie & Token persistence
 // ---------------------------------------------------------------
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
@@ -13,6 +14,7 @@ interface User {
   name: string;
   goal: string;
   experienceLevel: string;
+  workoutSplit?: string;
   bodyWeightKg: number | null;
   preferredUnit: "KG" | "LB";
   visibility: string;
@@ -52,22 +54,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsBackendAwake(true);
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
+        // Clear stale token if unauthorized
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("overloadhq_token");
+        }
         setUser(null);
         setIsBackendAwake(true);
       } else {
         // Backend might be sleeping (Render cold start)
         setIsBackendAwake(false);
-        // Retry after a delay
+        // Retry once after a delay
         setTimeout(async () => {
           try {
             const data = await api.auth.me();
             setUser(data.user);
             setIsBackendAwake(true);
           } catch {
-            setIsBackendAwake(true); // Give up gracefully
+            setIsBackendAwake(true);
             setUser(null);
           }
-        }, 3000);
+        }, 2500);
       }
     }
   }, []);
@@ -80,10 +86,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string) => {
     setError(null);
     try {
-      const data = await api.auth.login({ email, password });
+      const data = await api.auth.login({ email: email.trim(), password });
+      if (data?.token && typeof window !== "undefined") {
+        localStorage.setItem("overloadhq_token", data.token);
+      }
       setUser(data.user);
-    } catch (err) {
-      const msg = err instanceof ApiError ? err.message : "Login failed";
+    } catch (err: any) {
+      const msg = err instanceof ApiError ? err.message : (err?.message || "Login failed");
       setError(msg);
       throw err;
     }
@@ -98,10 +107,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }) => {
     setError(null);
     try {
-      const res = await api.auth.register(data);
+      const res = await api.auth.register({
+        ...data,
+        email: data.email.trim(),
+        username: data.username.trim(),
+        name: data.name.trim(),
+      });
+      if (res?.token && typeof window !== "undefined") {
+        localStorage.setItem("overloadhq_token", res.token);
+      }
       setUser(res.user);
-    } catch (err) {
-      const msg = err instanceof ApiError ? err.message : "Registration failed";
+    } catch (err: any) {
+      const msg = err instanceof ApiError ? err.message : (err?.message || "Registration failed");
       setError(msg);
       throw err;
     }
@@ -109,6 +126,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("overloadhq_token");
+      }
       await api.auth.logout();
     } catch (e) {
       console.warn("Backend logout request error, clearing client auth state", e);

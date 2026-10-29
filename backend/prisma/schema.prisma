@@ -68,6 +68,7 @@ model User {
   name            String
   goal            Goal            @default(GENERAL_FITNESS)
   experienceLevel ExperienceLevel @default(BEGINNER)
+  workoutSplit    String?         @default("4_DAY_SPLIT")
   bodyWeightKg    Float?
   preferredUnit   PreferredUnit   @default(KG)
   visibility      Visibility      @default(PRIVATE)
@@ -87,14 +88,16 @@ model User {
 }
 
 model Workout {
-  id          String      @id @default(cuid())
-  userId      String
-  date        DateTime
-  dayName     String      // e.g. "Thursday", auto-derived from date
-  muscleGroup MuscleGroup
-  notes       String?
-  isSample    Boolean     @default(false)
-  createdAt   DateTime    @default(now())
+  id           String      @id @default(cuid())
+  userId       String
+  date         DateTime
+  dayName      String      // e.g. "Thursday", auto-derived from date
+  muscleGroup  MuscleGroup
+  muscleGroups String[]    @default([])
+  split        String?     @default("4_DAY_SPLIT")
+  notes        String?
+  isSample     Boolean     @default(false)
+  createdAt    DateTime    @default(now())
 
   user User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   sets ExerciseSet[]

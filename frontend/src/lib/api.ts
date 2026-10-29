@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------
 // OverloadHQ – API Client (Frontend)
 // All API calls go through Next.js rewrites → backend
+// Includes dual token authorization (Cookie + Bearer token)
 // ---------------------------------------------------------------
 
 import { API_BASE } from "./config";
@@ -21,13 +22,28 @@ async function request<T>(
 ): Promise<T> {
   const url = `${API_BASE}${path}`;
 
+  // Retrieve token from localStorage if in browser
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("overloadhq_token")
+      : null;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  // Merge any caller-provided headers
+  if (options.headers) {
+    const incoming = options.headers as Record<string, string>;
+    Object.assign(headers, incoming);
+  }
+
   const res = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
     ...options,
+    credentials: "include",
+    headers,
   });
 
   if (!res.ok) {
@@ -40,7 +56,14 @@ async function request<T>(
     return (await res.text()) as unknown as T;
   }
 
-  return res.json();
+  const json = await res.json();
+
+  // If token received in response, persist it locally for resilience
+  if (json?.token && typeof window !== "undefined") {
+    localStorage.setItem("overloadhq_token", json.token);
+  }
+
+  return json;
 }
 
 // ---- Auth ----
@@ -57,7 +80,12 @@ export const api = {
     login: (data: { email: string; password: string }) =>
       request<any>("/auth/login", { method: "POST", body: JSON.stringify(data) }),
 
-    logout: () => request<any>("/auth/logout", { method: "POST" }),
+    logout: () => {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("overloadhq_token");
+      }
+      return request<any>("/auth/logout", { method: "POST" });
+    },
 
     me: () => request<any>("/auth/me"),
 
@@ -124,6 +152,14 @@ export const api = {
     summary: () => request<any>("/progress/summary"),
 
     prs: () => request<any>("/progress/prs"),
+
+    splitOverload: (muscleGroup?: string, split?: string) => {
+      const params = new URLSearchParams();
+      if (muscleGroup) params.set("muscleGroup", muscleGroup);
+      if (split) params.set("split", split);
+      const query = params.toString() ? `?${params.toString()}` : "";
+      return request<any>(`/progress/split-overload${query}`);
+    },
   },
 
   ai: {

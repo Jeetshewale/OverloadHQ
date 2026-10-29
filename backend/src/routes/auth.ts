@@ -37,21 +37,28 @@ router.post(
   validate(registerSchema),
   asyncHandler(async (req: Request, res: Response) => {
     const { email, username, password, name, inviteCode } = req.body;
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedUsername = username.trim();
 
-    // Check invite code if required
-    if (config.inviteCode && config.inviteCode !== inviteCode) {
+    // Check invite code ONLY if both configured and explicitly provided with mismatch
+    if (config.inviteCode && inviteCode && config.inviteCode !== inviteCode) {
       throw new AppError(403, "Invalid invite code");
     }
 
     // Check existing user
     const existing = await withRetry(() =>
       prisma.user.findFirst({
-        where: { OR: [{ email }, { username }] },
+        where: {
+          OR: [
+            { email: normalizedEmail },
+            { username: { equals: normalizedUsername, mode: "insensitive" } },
+          ],
+        },
       })
     );
 
     if (existing) {
-      if (existing.email === email) {
+      if (existing.email.toLowerCase() === normalizedEmail) {
         throw new AppError(409, "Email already registered");
       }
       throw new AppError(409, "Username already taken");
@@ -61,16 +68,29 @@ router.post(
 
     const user = await withRetry(() =>
       prisma.user.create({
-        data: { email, username, passwordHash, name },
-        select: { id: true, email: true, username: true, name: true, onboardingDone: true },
+        data: {
+          email: normalizedEmail,
+          username: normalizedUsername,
+          passwordHash,
+          name: name.trim(),
+          workoutSplit: "4_DAY_SPLIT",
+        },
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          name: true,
+          workoutSplit: true,
+          onboardingDone: true,
+        },
       })
     );
 
     const token = generateToken({ userId: user.id, email: user.email });
     setTokenCookie(res, token);
 
-    logger.info({ userId: user.id, username }, "User registered");
-    res.status(201).json({ user });
+    logger.info({ userId: user.id, username: user.username }, "User registered");
+    res.status(201).json({ user, token });
   })
 );
 
@@ -80,28 +100,37 @@ router.post(
   validate(loginSchema),
   asyncHandler(async (req: Request, res: Response) => {
     const { email, password } = req.body;
+    const identifier = (email || "").trim();
+    const normalized = identifier.toLowerCase();
 
+    // Support login via either email or username
     const user = await withRetry(() =>
-      prisma.user.findUnique({
-        where: { email },
+      prisma.user.findFirst({
+        where: {
+          OR: [
+            { email: normalized },
+            { username: { equals: identifier, mode: "insensitive" } },
+          ],
+        },
         select: {
           id: true,
           email: true,
           username: true,
           name: true,
           passwordHash: true,
+          workoutSplit: true,
           onboardingDone: true,
         },
       })
     );
 
     if (!user) {
-      throw new AppError(401, "Invalid email or password");
+      throw new AppError(401, "Invalid email/username or password");
     }
 
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) {
-      throw new AppError(401, "Invalid email or password");
+      throw new AppError(401, "Invalid email/username or password");
     }
 
     const token = generateToken({ userId: user.id, email: user.email });
@@ -109,7 +138,7 @@ router.post(
 
     logger.info({ userId: user.id }, "User logged in");
     const { passwordHash: _, ...userWithoutPassword } = user;
-    res.json({ user: userWithoutPassword });
+    res.json({ user: userWithoutPassword, token });
   })
 );
 
@@ -134,6 +163,7 @@ router.get(
           name: true,
           goal: true,
           experienceLevel: true,
+          workoutSplit: true,
           bodyWeightKg: true,
           preferredUnit: true,
           visibility: true,

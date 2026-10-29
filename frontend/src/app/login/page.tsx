@@ -1,6 +1,6 @@
 "use client";
 // ---------------------------------------------------------------
-// OverloadHQ – Login Page
+// OverloadHQ – Login Page (Blue & White Theme, Fast & Resilient)
 // ---------------------------------------------------------------
 
 import { useState } from "react";
@@ -12,12 +12,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Dumbbell, Loader2 } from "lucide-react";
+import { Dumbbell, Loader2, ArrowRight } from "lucide-react";
 
 export default function LoginPage() {
   const { login, isBackendAwake } = useAuth();
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,57 +25,82 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    const trimmedId = identifier.trim();
+    if (!trimmedId) {
+      setError("Please enter your email or username");
+      return;
+    }
+    if (!password) {
+      setError("Please enter your password");
+      return;
+    }
+
     setLoading(true);
     try {
-      await login(email, password);
+      await login(trimmedId, password);
       router.push("/dashboard");
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      setError(err?.message || "Invalid credentials. Please verify your details.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-md animate-fade-in">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-3">
-            <Dumbbell className="h-10 w-10 text-primary" />
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+      <Card className="w-full max-w-md animate-fade-in shadow-xl border-border/80">
+        <CardHeader className="text-center pb-4">
+          <div className="mx-auto mb-3 h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/25 shadow-sm">
+            <Dumbbell className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl">{APP_NAME}</CardTitle>
-          <CardDescription>Log in to track your progress</CardDescription>
+          <CardTitle className="text-2xl font-bold tracking-tight text-foreground">{APP_NAME}</CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">
+            Log in to continue your progressive overload journey
+          </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           {!isBackendAwake && (
-            <div className="mb-4 p-3 rounded-lg bg-primary/10 text-primary text-sm text-center">
-              <Loader2 className="h-4 w-4 animate-spin inline mr-2" />
-              Waking up the server — this can take up to a minute...
+            <div className="p-3 rounded-lg bg-primary/10 text-primary border border-primary/20 text-xs text-center font-medium">
+              <Loader2 className="h-3.5 w-3.5 animate-spin inline mr-2" />
+              Connecting to server — this takes a few seconds on the first load...
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+              <div className="p-3 rounded-lg bg-destructive/10 text-destructive border border-destructive/20 text-xs font-medium">
                 {error}
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="identifier" className="text-xs font-semibold text-foreground">
+                Email or Username
+              </Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="identifier"
+                type="text"
+                placeholder="you@example.com or coollifter"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 required
-                autoComplete="email"
+                autoComplete="username"
+                className="bg-card text-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-xs font-semibold text-foreground">
+                  Password
+                </Label>
+                <Link
+                  href="/forgot-password"
+                  className="text-xs text-primary hover:underline font-medium"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <Input
                 id="password"
                 type="password"
@@ -84,28 +109,34 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
+                className="bg-card text-sm"
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md active:scale-[0.98] transition-all"
+              disabled={loading}
+            >
               {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : null}
-              Log in
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  Logging in...
+                </>
+              ) : (
+                <>
+                  Log In
+                  <ArrowRight className="h-4 w-4 ml-1.5" />
+                </>
+              )}
             </Button>
           </form>
 
-          <div className="mt-6 text-center space-y-2">
-            <Link
-              href="/forgot-password"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Forgot password?
-            </Link>
-            <p className="text-sm text-muted-foreground">
+          <div className="pt-2 text-center">
+            <p className="text-xs text-muted-foreground">
               Don&apos;t have an account?{" "}
-              <Link href="/signup" className="text-primary hover:underline font-medium">
-                Sign up
+              <Link href="/signup" className="text-primary hover:underline font-semibold">
+                Sign up free
               </Link>
             </p>
           </div>

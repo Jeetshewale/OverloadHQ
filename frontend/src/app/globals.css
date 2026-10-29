@@ -4,46 +4,46 @@
 
 @layer base {
   :root {
-    /* Clean, organised light theme */
-    --background: 220 14% 97%;
-    --foreground: 220 24% 12%;
+    /* Clean, premium Blue & White light theme */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 220 24% 12%;
-    --primary: 151 70% 36%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 92%;
-    --secondary-foreground: 220 20% 14%;
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 10% 46%;
-    --accent: 151 60% 92%;
-    --accent-foreground: 151 80% 22%;
-    --destructive: 0 72% 51%;
+    --card-foreground: 222 47% 11%;
+    --primary: 221 83% 53%; /* Electric Royal Blue #2563eb */
+    --primary-foreground: 0 0% 100%; /* Pure White */
+    --secondary: 214 95% 93%; /* Soft Ice Blue */
+    --secondary-foreground: 221 83% 40%;
+    --muted: 214 32% 91%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 214 95% 92%;
+    --accent-foreground: 221 83% 45%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 86%;
-    --input: 220 13% 86%;
-    --ring: 151 70% 36%;
+    --border: 214 32% 88%;
+    --input: 214 32% 88%;
+    --ring: 221 83% 53%;
     --radius: 0.75rem;
   }
 
   .dark {
-    /* Sleek, deep dark theme */
-    --background: 220 20% 7%;
-    --foreground: 210 20% 95%;
-    --card: 220 18% 11%;
-    --card-foreground: 210 20% 95%;
-    --primary: 151 75% 45%;
-    --primary-foreground: 220 20% 7%;
-    --secondary: 220 16% 16%;
-    --secondary-foreground: 210 20% 95%;
-    --muted: 220 14% 15%;
-    --muted-foreground: 215 15% 58%;
-    --accent: 151 50% 18%;
-    --accent-foreground: 210 20% 95%;
-    --destructive: 0 62% 55%;
-    --destructive-foreground: 210 20% 95%;
-    --border: 220 14% 19%;
-    --input: 220 14% 19%;
-    --ring: 151 75% 45%;
+    /* Sleek, deep Midnight Navy & Pure White dark theme */
+    --background: 222 47% 7%; /* Obsidian Midnight Navy #0a0f1d */
+    --foreground: 210 40% 98%; /* Crisp Pure White #f8fafc */
+    --card: 222 42% 11%; /* Deep Sleek Navy #0f172a */
+    --card-foreground: 210 40% 98%; /* Crisp Pure White */
+    --primary: 217 91% 60%; /* Vibrant Electric Blue #3b82f6 */
+    --primary-foreground: 0 0% 100%; /* Pure White */
+    --secondary: 222 36% 18%; /* Dark Navy Slate */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 35% 15%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 217 91% 60%;
   }
 }
 
@@ -54,7 +54,18 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
   }
+}
+
+/* Blazing fast tactile response on click / tap */
+button, a, [role="button"], input[type="button"], input[type="submit"] {
+  touch-action: manipulation;
+}
+
+button:active:not(:disabled), .btn-fast:active {
+  transform: scale(0.97);
+  transition: transform 0.05s ease-out;
 }
 
 /* Custom scrollbar */
@@ -86,23 +97,23 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Smooth page transitions */
 .page-enter {
-  animation: fade-in 0.3s ease-out;
+  animation: fade-in 0.2s ease-out;
 }
 
-/* Glass card effect */
+/* Glass card effect with blue subtle tint */
 .glass {
-  background: hsl(var(--card) / 0.8);
+  background: hsl(var(--card) / 0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid hsl(var(--border) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.6);
 }
 
-/* Glow border for highlights */
+/* Glow border for blue highlights */
 .glow-border {
-  box-shadow: 0 0 15px hsl(var(--primary) / 0.2),
-    inset 0 0 15px hsl(var(--primary) / 0.05);
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.25),
+    inset 0 0 15px hsl(var(--primary) / 0.08);
 }
 
-/* PR badge shimmer */
+/* PR badge shimmer in electric & cyan blue */
 @keyframes shimmer {
   0% {
     background-position: -200% center;
@@ -116,7 +127,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background: linear-gradient(
     90deg,
     hsl(var(--primary)) 0%,
-    hsl(151 80% 68%) 50%,
+    hsl(199 89% 65%) 50%,
     hsl(var(--primary)) 100%
   );
   background-size: 200% auto;

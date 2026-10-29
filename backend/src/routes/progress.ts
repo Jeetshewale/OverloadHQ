@@ -410,4 +410,155 @@ router.get(
   })
 );
 
+// ---- 4-Day Split Muscle Progressive Overload (Evaluated after 2 workout days of each muscle) ----
+router.get(
+  "/split-overload",
+  authMiddleware,
+  asyncHandler(async (req: Request, res: Response) => {
+    const userId = req.user!.userId;
+    const requestedSplit = (req.query.split as string) || "4_DAY_SPLIT";
+    const filterMuscle = req.query.muscleGroup as string | undefined;
+
+    // Fetch all user workouts ordered by date ascending
+    const workouts = await withRetry(() =>
+      prisma.workout.findMany({
+        where: { userId },
+        include: {
+          sets: { orderBy: [{ exerciseName: "asc" }, { setNumber: "asc" }] },
+        },
+        orderBy: { date: "asc" },
+      })
+    );
+
+    const ALL_MUSCLES = [
+      "CHEST",
+      "BACK",
+      "LEGS",
+      "SHOULDERS",
+      "BICEPS",
+      "TRICEPS",
+      "ARMS",
+      "CORE",
+      "FULL_BODY",
+    ];
+
+    const targetMuscles = filterMuscle
+      ? [filterMuscle.toUpperCase()]
+      : ALL_MUSCLES;
+
+    const muscleAnalysis = targetMuscles.map((mg) => {
+      // Find workouts that train this muscle group
+      const matchingWorkouts = workouts.filter((w) => {
+        const inEnum = w.muscleGroup === mg;
+        const inArray = Array.isArray(w.muscleGroups) && w.muscleGroups.includes(mg);
+        return inEnum || inArray;
+      });
+
+      const sessionCount = matchingWorkouts.length;
+      // In 4-day split, progressive overload is evaluated after every 2 workout days of that muscle
+      const cycleDay = sessionCount === 0 ? 0 : (sessionCount % 2 === 0 ? 2 : 1);
+      const isOverloadEvaluated = sessionCount >= 2;
+
+      if (!isOverloadEvaluated) {
+        return {
+          muscleGroup: mg,
+          sessionCount,
+          cycleDay,
+          cycleTarget: 2,
+          isOverloadEvaluated: false,
+          status: sessionCount === 1 ? "BASELINE_SET" : "NO_SESSIONS",
+          message:
+            sessionCount === 1
+              ? "Day 1 of 2 logged. Complete 1 more workout for this muscle to trigger Progressive Overload analysis!"
+              : "No workouts logged for this muscle yet.",
+          session1Date: sessionCount === 1 ? matchingWorkouts[0].date.toISOString().split("T")[0] : null,
+          session2Date: null,
+          volumeChange: 0,
+          weightChange: 0,
+          exercises: [],
+        };
+      }
+
+      // Take the two most recent workout days for this muscle
+      const session1 = matchingWorkouts[sessionCount - 2];
+      const session2 = matchingWorkouts[sessionCount - 1];
+
+      const s1Volume = session1.sets.reduce((sum, s) => sum + volume(s.weightKg, s.reps), 0);
+      const s2Volume = session2.sets.reduce((sum, s) => sum + volume(s.weightKg, s.reps), 0);
+
+      const s1MaxWeight = session1.sets.length > 0 ? Math.max(...session1.sets.map((s) => s.weightKg)) : 0;
+      const s2MaxWeight = session2.sets.length > 0 ? Math.max(...session2.sets.map((s) => s.weightKg)) : 0;
+
+      const volChange = pctChange(s1Volume, s2Volume);
+      const wtChange = pctChange(s1MaxWeight, s2MaxWeight);
+
+      // Per-exercise comparison
+      const s1ExMap = new Map<string, { maxWeight: number; totalVolume: number; bestReps: number }>();
+      for (const s of session1.sets) {
+        const cur = s1ExMap.get(s.exerciseName) || { maxWeight: 0, totalVolume: 0, bestReps: 0 };
+        cur.maxWeight = Math.max(cur.maxWeight, s.weightKg);
+        cur.bestReps = Math.max(cur.bestReps, s.reps);
+        cur.totalVolume += volume(s.weightKg, s.reps);
+        s1ExMap.set(s.exerciseName, cur);
+      }
+
+      const exercises = [];
+      const s2ExNames = [...new Set(session2.sets.map((s) => s.exerciseName))];
+      for (const name of s2ExNames) {
+        const sets2 = session2.sets.filter((s) => s.exerciseName === name);
+        const maxWeight2 = Math.max(...sets2.map((s) => s.weightKg));
+        const bestReps2 = Math.max(...sets2.map((s) => s.reps));
+        const vol2 = sets2.reduce((sum, s) => sum + volume(s.weightKg, s.reps), 0);
+
+        const past = s1ExMap.get(name);
+        exercises.push({
+          name,
+          day1MaxWeight: past ? past.maxWeight : null,
+          day2MaxWeight: maxWeight2,
+          day1Reps: past ? past.bestReps : null,
+          day2Reps: bestReps2,
+          day1Volume: past ? Math.round(past.totalVolume) : null,
+          day2Volume: Math.round(vol2),
+          weightChange: past ? pctChange(past.maxWeight, maxWeight2) : null,
+          volumeChange: past ? pctChange(past.totalVolume, vol2) : null,
+          isOverload: past ? (maxWeight2 > past.maxWeight || vol2 > past.totalVolume) : true,
+        });
+      }
+
+      let status: "ACHIEVED" | "STEADY" | "RECOVERY" = "STEADY";
+      let message = "Maintained intensity across 2 workout days.";
+      if (s2Volume > s1Volume || s2MaxWeight > s1MaxWeight) {
+        status = "ACHIEVED";
+        message = `Progressive overload achieved! Volume up ${volChange > 0 ? "+" + volChange + "%" : "steady"}, top load up ${wtChange > 0 ? "+" + wtChange + "%" : "steady"}.`;
+      } else if (s2Volume < s1Volume * 0.95) {
+        status = "RECOVERY";
+        message = `Volume slightly down (${volChange}%). Prioritize sleep and recovery before the next cycle.`;
+      }
+
+      return {
+        muscleGroup: mg,
+        sessionCount,
+        cycleDay: 2,
+        cycleTarget: 2,
+        isOverloadEvaluated: true,
+        status,
+        message,
+        session1Date: session1.date.toISOString().split("T")[0],
+        session2Date: session2.date.toISOString().split("T")[0],
+        session1Volume: Math.round(s1Volume),
+        session2Volume: Math.round(s2Volume),
+        volumeChange: volChange,
+        weightChange: wtChange,
+        exercises,
+      };
+    });
+
+    res.json({
+      split: requestedSplit,
+      trackingRule: "Progressive overload tracked after 2 workout days for each muscle group",
+      muscleAnalysis: muscleAnalysis.filter((m) => m.sessionCount > 0 || (filterMuscle && m.muscleGroup === filterMuscle)),
+    });
+  })
+);
+
 export default router;

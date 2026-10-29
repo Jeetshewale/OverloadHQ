@@ -1,7 +1,7 @@
 "use client";
 // ---------------------------------------------------------------
 // OverloadHQ – Log & Edit Workout Page
-// Single-exercise logging, edit past workouts, interactive calendar
+// Multi-muscle-group badges, workout split selector, interactive calendar
 // ---------------------------------------------------------------
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
@@ -12,6 +12,10 @@ import {
   MUSCLE_GROUPS,
   MUSCLE_GROUP_LABELS,
   MUSCLE_GROUP_EMOJIS,
+  MUSCLE_PRESETS,
+  WORKOUT_SPLITS,
+  WORKOUT_SPLIT_LABELS,
+  WORKOUT_SPLIT_DESCRIPTIONS,
 } from "@/lib/config";
 import { formatWeight, getDayName } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,6 +37,8 @@ import {
   Save,
   CheckCircle2,
   AlertCircle,
+  Zap,
+  Layers,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -94,16 +100,33 @@ function LogWorkoutContent() {
 
   const todayStr = new Date().toISOString().split("T")[0];
   const [date, setDate] = useState(todayStr);
-  const [muscleGroup, setMuscleGroup] = useState<string>("");
+  // Multi-select muscle groups
+  const [selectedMuscles, setSelectedMuscles] = useState<string[]>([]);
+  // Workout split
+  const [split, setSplit] = useState<string>(user?.workoutSplit || "4_DAY_SPLIT");
   const [notes, setNotes] = useState("");
   const [exercises, setExercises] = useState<ExerciseGroup[]>([]);
   const [activeWorkoutId, setActiveWorkoutId] = useState<string | null>(editId);
   const [isSavingProgress, setIsSavingProgress] = useState(false);
   const [restTimer, setRestTimer] = useState<number | null>(null);
   const [restTimerActive, setRestTimerActive] = useState(false);
+  const [showPresets, setShowPresets] = useState(false);
 
   // Derive day name from selected date
   const dayName = date ? getDayName(new Date(date + "T12:00:00")) : "";
+
+  // Toggle a muscle group on/off
+  const toggleMuscle = (mg: string) => {
+    setSelectedMuscles((prev) =>
+      prev.includes(mg) ? prev.filter((m) => m !== mg) : [...prev, mg]
+    );
+  };
+
+  // Apply a preset combo
+  const applyPreset = (groups: string[]) => {
+    setSelectedMuscles(groups);
+    setShowPresets(false);
+  };
 
   // Load existing workout if in edit mode
   const { data: existingWorkoutData, isLoading: loadingExisting } = useQuery({
@@ -116,7 +139,13 @@ function LogWorkoutContent() {
     if (existingWorkoutData?.workout) {
       const w = existingWorkoutData.workout;
       setDate(new Date(w.date).toISOString().split("T")[0]);
-      setMuscleGroup(w.muscleGroup);
+      // Restore multi-select muscle groups
+      if (w.muscleGroups && w.muscleGroups.length > 0) {
+        setSelectedMuscles(w.muscleGroups);
+      } else {
+        setSelectedMuscles(w.muscleGroup ? [w.muscleGroup] : []);
+      }
+      if (w.split) setSplit(w.split);
       setNotes(w.notes || "");
       setActiveWorkoutId(w.id);
 
@@ -150,11 +179,12 @@ function LogWorkoutContent() {
     }
   }, [existingWorkoutData]);
 
-  // Fetch exercise library for autocomplete
+  // Fetch exercise library for autocomplete — uses primary muscle
+  const primaryMuscle = selectedMuscles[0] || "";
   const { data: exerciseLib } = useQuery({
-    queryKey: ["exercises", muscleGroup],
-    queryFn: () => api.exercises.list(muscleGroup || undefined),
-    enabled: !!muscleGroup,
+    queryKey: ["exercises", primaryMuscle],
+    queryFn: () => api.exercises.list(primaryMuscle || undefined),
+    enabled: !!primaryMuscle,
   });
 
   const exerciseNames = (exerciseLib?.exercises || []).map((e: any) => e.name);
@@ -313,7 +343,9 @@ function LogWorkoutContent() {
     );
     return {
       date,
-      muscleGroup,
+      muscleGroup: selectedMuscles[0] || "OTHER",
+      muscleGroups: selectedMuscles.length > 0 ? selectedMuscles : ["OTHER"],
+      split,
       notes: notes || null,
       sets: allSets,
     };
@@ -321,8 +353,8 @@ function LogWorkoutContent() {
 
   // Save current progress (Save exercise one-by-one)
   const saveProgress = async () => {
-    if (!muscleGroup) {
-      toast({ title: "Select a muscle group first", variant: "destructive" });
+    if (selectedMuscles.length === 0) {
+      toast({ title: "Select at least one muscle group", variant: "destructive" });
       return;
     }
     const payload = buildPayload();
@@ -358,7 +390,7 @@ function LogWorkoutContent() {
   // Final Submit
   const submitMutation = useMutation({
     mutationFn: async () => {
-      if (!muscleGroup) throw new Error("Select a muscle group");
+      if (selectedMuscles.length === 0) throw new Error("Select at least one muscle group");
       const payload = buildPayload();
       if (payload.sets.length === 0) throw new Error("Add at least one set");
       if (payload.sets.some((s) => !s.exerciseName)) throw new Error("Fill in all exercise names");
@@ -490,33 +522,142 @@ function LogWorkoutContent() {
               })}
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Muscle Group Picker */}
-          <div className="space-y-2 pt-2 border-t border-border/40">
+      {/* Workout Split Selector */}
+      <Card>
+        <CardContent className="p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <Layers className="h-4 w-4 text-primary" />
             <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Target Muscle Group
+              Workout Split
             </Label>
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5">
-              {MUSCLE_GROUPS.map((mg) => {
-                const isSelected = muscleGroup === mg;
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+            {WORKOUT_SPLITS.map((s) => {
+              const isActive = split === s;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSplit(s)}
+                  className={`relative p-2.5 rounded-lg text-xs font-medium transition-all border text-left ${
+                    isActive
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "bg-card hover:bg-muted border-border/60 text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <span className="block font-semibold">{WORKOUT_SPLIT_LABELS[s]}</span>
+                  {isActive && (
+                    <Check className="absolute top-2 right-2 h-3.5 w-3.5" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          {split && (
+            <p className="text-[11px] text-muted-foreground leading-relaxed bg-secondary/40 rounded-lg px-3 py-2">
+              <Zap className="inline h-3 w-3 text-primary mr-1" />
+              {WORKOUT_SPLIT_DESCRIPTIONS[split]}
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Multi-Select Muscle Group Picker */}
+      <Card>
+        <CardContent className="p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Target Muscle Groups
+            </Label>
+            <button
+              type="button"
+              onClick={() => setShowPresets(!showPresets)}
+              className="flex items-center gap-1 text-[11px] font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              <Zap className="h-3 w-3" />
+              Quick Presets
+              <ChevronDown className={`h-3 w-3 transition-transform ${showPresets ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+
+          {/* Quick Presets */}
+          {showPresets && (
+            <div className="flex flex-wrap gap-1.5 pb-2 border-b border-border/40">
+              {MUSCLE_PRESETS.map((preset) => {
+                const isActive = preset.groups.length === selectedMuscles.length &&
+                  preset.groups.every((g) => selectedMuscles.includes(g));
                 return (
                   <button
-                    key={mg}
+                    key={preset.label}
                     type="button"
-                    onClick={() => setMuscleGroup(mg)}
-                    className={`flex items-center gap-1.5 p-2 rounded-lg text-xs font-medium transition-all border ${
-                      isSelected
+                    onClick={() => applyPreset(preset.groups)}
+                    className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border ${
+                      isActive
                         ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-card hover:bg-muted border-border/60 text-muted-foreground hover:text-foreground"
+                        : "bg-secondary/60 text-muted-foreground border-border/40 hover:bg-muted hover:text-foreground"
                     }`}
                   >
-                    <span>{MUSCLE_GROUP_EMOJIS[mg]}</span>
-                    <span className="truncate">{MUSCLE_GROUP_LABELS[mg]}</span>
+                    {preset.label}
                   </button>
                 );
               })}
             </div>
+          )}
+
+          {/* Muscle group badges (multi-select) */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5">
+            {MUSCLE_GROUPS.map((mg) => {
+              const isSelected = selectedMuscles.includes(mg);
+              return (
+                <button
+                  key={mg}
+                  type="button"
+                  onClick={() => toggleMuscle(mg)}
+                  className={`flex items-center gap-1.5 p-2 rounded-lg text-xs font-medium transition-all border ${
+                    isSelected
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "bg-card hover:bg-muted border-border/60 text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <span>{MUSCLE_GROUP_EMOJIS[mg]}</span>
+                  <span className="truncate">{MUSCLE_GROUP_LABELS[mg]}</span>
+                  {isSelected && <Check className="h-3 w-3 ml-auto flex-shrink-0" />}
+                </button>
+              );
+            })}
           </div>
+
+          {/* Selected summary */}
+          {selectedMuscles.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              <span className="text-[11px] text-muted-foreground">Selected:</span>
+              {selectedMuscles.map((mg) => (
+                <span
+                  key={mg}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[11px] font-medium border border-primary/20"
+                >
+                  {MUSCLE_GROUP_EMOJIS[mg]} {MUSCLE_GROUP_LABELS[mg]}
+                  <button
+                    type="button"
+                    onClick={() => toggleMuscle(mg)}
+                    className="hover:text-destructive transition-colors ml-0.5"
+                  >
+                    <X className="h-2.5 w-2.5" />
+                  </button>
+                </span>
+              ))}
+              <button
+                type="button"
+                onClick={() => setSelectedMuscles([])}
+                className="text-[10px] text-muted-foreground hover:text-destructive transition-colors ml-1"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
         </CardContent>
       </Card>
 

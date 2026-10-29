@@ -99,10 +99,17 @@ router.post(
   validate(createWorkoutSchema),
   asyncHandler(async (req: Request, res: Response) => {
     const userId = req.user!.userId;
-    const { date, muscleGroup, notes, isSample, sets } = req.body;
+    const { date, muscleGroup, muscleGroups, split, notes, isSample, sets } = req.body;
 
     const parsedDate = new Date(date);
     const dayName = getDayName(parsedDate);
+
+    // Determine normalized muscle group array & primary enum
+    const mGroups: string[] = Array.isArray(muscleGroups) && muscleGroups.length > 0
+      ? muscleGroups
+      : (muscleGroup ? [muscleGroup] : ["OTHER"]);
+    const primaryMuscleGroup = (mGroups[0] || muscleGroup || "OTHER") as any;
+    const workoutSplit = split || "4_DAY_SPLIT";
 
     const workout = await withRetry(() =>
       prisma.workout.create({
@@ -110,7 +117,9 @@ router.post(
           userId,
           date: parsedDate,
           dayName,
-          muscleGroup,
+          muscleGroup: primaryMuscleGroup,
+          muscleGroups: mGroups,
+          split: workoutSplit,
           notes,
           isSample: isSample || false,
           sets: {
@@ -131,20 +140,19 @@ router.post(
       })
     );
 
-    // Auto-save custom exercise names to the user's library
+    // Blazing-fast: Auto-save custom exercises in background without blocking response
     const exerciseNames = [...new Set(sets.map((s: any) => s.exerciseName))] as string[];
-    for (const name of exerciseNames) {
-      // Try to create a user-specific exercise entry; ignore if already exists
-      await prisma.exercise.create({
-        data: {
-          name,
-          muscleGroup,
-          createdByUserId: userId,
-        },
-      }).catch(() => {
-        // Already exists — that's fine
-      });
-    }
+    Promise.allSettled(
+      exerciseNames.map((name) =>
+        prisma.exercise.create({
+          data: {
+            name,
+            muscleGroup: primaryMuscleGroup,
+            createdByUserId: userId,
+          },
+        }).catch(() => {})
+      )
+    ).catch(() => {});
 
     res.status(201).json({ workout });
   })
@@ -167,7 +175,7 @@ router.put(
 
     if (!existing) throw new AppError(404, "Workout not found");
 
-    const { date, muscleGroup, notes, sets } = req.body;
+    const { date, muscleGroup, muscleGroups, split, notes, sets } = req.body;
 
     const updateData: any = {};
     if (date) {
@@ -175,7 +183,16 @@ router.put(
       updateData.date = parsedDate;
       updateData.dayName = getDayName(parsedDate);
     }
-    if (muscleGroup) updateData.muscleGroup = muscleGroup;
+    if (muscleGroups && Array.isArray(muscleGroups)) {
+      updateData.muscleGroups = muscleGroups;
+      if (muscleGroups.length > 0) {
+        updateData.muscleGroup = muscleGroups[0] as any;
+      }
+    } else if (muscleGroup) {
+      updateData.muscleGroup = muscleGroup;
+      updateData.muscleGroups = [muscleGroup];
+    }
+    if (split !== undefined) updateData.split = split;
     if (notes !== undefined) updateData.notes = notes;
 
     // If sets are provided, replace all sets

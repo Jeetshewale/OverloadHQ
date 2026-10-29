@@ -40,24 +40,25 @@ export const MuscleGroupEnum = z.enum([
 
 // ---- Auth ----
 export const registerSchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: z.string().trim().toLowerCase().email("Please enter a valid email address"),
   username: z
     .string()
+    .trim()
     .min(3, "Username must be at least 3 characters")
     .max(30, "Username too long")
     .regex(/^[a-zA-Z0-9_]+$/, "Username: letters, numbers, underscores only"),
   password: z.string().min(8, "Password must be at least 8 characters"),
-  name: z.string().min(1, "Name is required").max(100),
-  inviteCode: z.string().optional(),
+  name: z.string().trim().min(1, "Name is required").max(100),
+  inviteCode: z.string().optional().nullable(),
 });
 
 export const loginSchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: z.string().trim().min(1, "Please enter your email or username"),
   password: z.string().min(1, "Password is required"),
 });
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: z.string().trim().toLowerCase().email("Invalid email"),
 });
 
 export const resetPasswordSchema = z.object({
@@ -67,9 +68,10 @@ export const resetPasswordSchema = z.object({
 
 // ---- Profile ----
 export const updateProfileSchema = z.object({
-  name: z.string().min(1).max(100).optional(),
+  name: z.string().trim().min(1).max(100).optional(),
   goal: GoalEnum.optional(),
   experienceLevel: ExperienceLevelEnum.optional(),
+  workoutSplit: z.string().optional(),
   bodyWeightKg: z.number().positive().optional().nullable(),
   preferredUnit: PreferredUnitEnum.optional(),
   visibility: VisibilityEnum.optional(),
@@ -83,7 +85,7 @@ export const changePasswordSchema = z.object({
 
 // ---- Exercise Set ----
 export const exerciseSetSchema = z.object({
-  exerciseName: z.string().min(1, "Exercise name required").max(100),
+  exerciseName: z.string().trim().min(1, "Exercise name required").max(100),
   setNumber: z.number().int().positive(),
   weightKg: z.number().min(0, "Weight cannot be negative"),
   reps: z.number().int().positive("Must do at least 1 rep"),
@@ -95,8 +97,10 @@ export const exerciseSetSchema = z.object({
 // ---- Workout ----
 export const createWorkoutSchema = z.object({
   date: z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid date"),
-  muscleGroup: MuscleGroupEnum,
-  notes: z.string().max(1000).optional().nullable(),
+  muscleGroup: MuscleGroupEnum.optional(),
+  muscleGroups: z.array(z.string()).optional(),
+  split: z.string().optional(),
+  notes: z.string().max(2000).optional().nullable(),
   isSample: z.boolean().default(false),
   sets: z.array(exerciseSetSchema).min(1, "Add at least one set"),
 });
@@ -107,7 +111,9 @@ export const updateWorkoutSchema = z.object({
     .refine((val) => !isNaN(Date.parse(val)), "Invalid date")
     .optional(),
   muscleGroup: MuscleGroupEnum.optional(),
-  notes: z.string().max(1000).optional().nullable(),
+  muscleGroups: z.array(z.string()).optional(),
+  split: z.string().optional(),
+  notes: z.string().max(2000).optional().nullable(),
   sets: z.array(exerciseSetSchema).min(1).optional(),
 });
 
